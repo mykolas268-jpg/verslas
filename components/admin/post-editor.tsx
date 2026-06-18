@@ -36,6 +36,9 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
   const [error, setError] = useState('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const bodyImageInputRef = useRef<HTMLInputElement>(null);
+  const [insertingImage, setInsertingImage] = useState(false);
 
   // Auto-generate the slug from the title until the user edits it (create only).
   useEffect(() => {
@@ -89,6 +92,45 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  }
+
+  // Uploads an image and inserts a <ProseImage> tag at the cursor in the body.
+  async function onInsertImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setInsertingImage(true);
+    setError('');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (res.ok) {
+        const snippet = `\n<ProseImage src="${data.path}" alt="" caption="" />\n`;
+        const textarea = bodyRef.current;
+        const start = textarea?.selectionStart ?? body.length;
+        const end = textarea?.selectionEnd ?? body.length;
+        const next = body.slice(0, start) + snippet + body.slice(end);
+        setBody(next);
+        const caret = start + snippet.length;
+        // Restore focus + caret after React re-renders the textarea.
+        setTimeout(() => {
+          const el = bodyRef.current;
+          if (el) {
+            el.focus();
+            el.selectionStart = caret;
+            el.selectionEnd = caret;
+          }
+        }, 0);
+      } else {
+        setError(data.error ?? 'Nepavyko įkelti paveikslo.');
+      }
+    } catch {
+      setError('Tinklo klaida įkeliant paveikslą.');
+    } finally {
+      setInsertingImage(false);
+      if (bodyImageInputRef.current) bodyImageInputRef.current.value = '';
     }
   }
 
@@ -216,7 +258,7 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
 
           <div>
             <label htmlFor="f-excerpt" className={fieldLabel}>
-              Santrauka
+              Santrauka (SEO aprašymas)
             </label>
             <textarea
               id="f-excerpt"
@@ -226,6 +268,16 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
               className="field !rounded-xl"
               placeholder="Trumpas aprašymas kortelėms ir „Google“."
             />
+            <p className="mt-1.5 px-1 text-xs text-muted">
+              Rodomas straipsnio kortelėse ir „Google“ paieškoje (meta aprašymas).{' '}
+              <span
+                className={
+                  excerpt.length > 160 ? 'text-amber-700 dark:text-amber-300' : ''
+                }
+              >
+                {excerpt.length}/160
+              </span>
+            </p>
           </div>
 
           <div>
@@ -272,11 +324,29 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
           </div>
 
           <div>
-            <label htmlFor="f-body" className={fieldLabel}>
-              Turinys (Markdown / MDX)
-            </label>
+            <div className="mb-1.5 flex items-center justify-between gap-2">
+              <label htmlFor="f-body" className="text-sm font-medium text-ink">
+                Turinys (Markdown / MDX)
+              </label>
+              <button
+                type="button"
+                onClick={() => bodyImageInputRef.current?.click()}
+                disabled={insertingImage}
+                className="rounded-full border border-line bg-card px-3 py-1.5 text-xs text-ink transition-colors hover:bg-surface disabled:opacity-60"
+              >
+                {insertingImage ? 'Keliama…' : '+ Įterpti paveikslą'}
+              </button>
+              <input
+                ref={bodyImageInputRef}
+                type="file"
+                accept="image/*"
+                onChange={onInsertImage}
+                className="hidden"
+              />
+            </div>
             <textarea
               id="f-body"
+              ref={bodyRef}
               value={body}
               onChange={(event) => setBody(event.target.value)}
               rows={22}
@@ -284,6 +354,11 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
               className="field !rounded-xl min-h-[480px] font-mono text-sm leading-relaxed"
               placeholder={'## Antraštė\n\nTekstas su **paryškinimu**…\n\n<Callout type="tip">\n\nPatarimas.\n\n</Callout>'}
             />
+            <p className="mt-1.5 px-1 text-xs text-muted">
+              Paveikslą įterpsi ties žymekliu. Rašyk Markdown / MDX — palaikomi
+              ## antraštės, sąrašai, **paryškinimas**, kodo blokai ir
+              &lt;Callout&gt;.
+            </p>
           </div>
         </div>
 
