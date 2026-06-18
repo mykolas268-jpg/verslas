@@ -1,0 +1,43 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dirbtinis intelektas klientų aptarnavimui">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c655a"/>
+      <stop offset="1" stop-color="#0a3a37"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.82" cy="0.18" r="0.7">
+      <stop offset="0" stop-color="#2dd4bf" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots1" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#9bf0e2" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg1)"/>
+  <rect width="1200" height="750" fill="url(#dots1)"/>
+  <rect width="1200" height="750" fill="url(#glow1)"/>
+
+  <!-- chat bubbles -->
+  <g>
+    <rect x="150" y="250" width="420" height="150" rx="34" fill="#ffffff" fill-opacity="0.10"/>
+    <rect x="150" y="250" width="420" height="150" rx="34" fill="none" stroke="#bff3ea" stroke-opacity="0.25" stroke-width="1.5"/>
+    <circle cx="210" cy="325" r="9" fill="#7ee7d6"/>
+    <circle cx="250" cy="325" r="9" fill="#7ee7d6" fill-opacity="0.7"/>
+    <circle cx="290" cy="325" r="9" fill="#7ee7d6" fill-opacity="0.45"/>
+
+    <rect x="610" y="380" width="470" height="170" rx="34" fill="#15bda6" fill-opacity="0.92"/>
+    <rect x="660" y="430" width="320" height="14" rx="7" fill="#063b36" fill-opacity="0.55"/>
+    <rect x="660" y="466" width="250" height="14" rx="7" fill="#063b36" fill-opacity="0.4"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(940 150)" fill="#bff3ea" fill-opacity="0.9">
+    <path d="M40 0c4 30 12 38 42 42-30 4-38 12-42 42-4-30-12-38-42-42C28 38 36 30 40 0Z"/>
+  </g>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#bff3ea">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#2dd4bf"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · POKALBIAI</text>
+  </g>
+</svg>

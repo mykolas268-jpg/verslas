@@ -1,0 +1,106 @@
+---
+title: "Kaip maža kavinė per savaitę automatizavo atsakymus klientams su AI"
+slug: ai-klientu-aptarnavimas
+date: 2026-06-10
+excerpt: "Realus scenarijus: kaip nedidelė Vilniaus kavinė pasitelkė dirbtinį intelektą pasikartojantiems klientų klausimams ir sutaupė kelias valandas per savaitę."
+tags: ["Klientų aptarnavimas", "Automatizavimas", "Promptai"]
+cover: /images/ai-klientu-aptarnavimas.svg
+draft: false
+---
+
+<Callout type="sample">
+
+Pavyzdinis straipsnis — pakeisk savo turiniu. Jis parodo, kaip atrodo realus „verslas.ai“ straipsnis: konkretus scenarijus, žingsniai ir paruoštas promptas.
+
+</Callout>
+
+Įsivaizduok nedidelę Vilniaus kavinę „Pas Joną“. Kiekvieną rytą į jų „Instagram“ ir el. paštą krenta tie patys klausimai: *kokios darbo valandos?*, *ar turite augalinio pieno?*, *ar galima užsisakyti tortą gimtadieniui?*. Savininkė Rūta atsakinėja pati — tarp kavos ruošimo ir tiekėjų skambučių. Tai atima maždaug valandą per dieną.
+
+Per vieną savaitę ji susitvarkė procesą taip, kad dauguma atsakymų paruošiami per kelias sekundes — ir vis tiek skamba kaip žmogus, o ne robotas. Štai kaip.
+
+## Ką darysime
+
+Tikslas paprastas: **paruoštas atsakymo juodraštis per kelias sekundes**, kurį žmogus tik peržiūri ir išsiunčia. Mums reikės trijų dalykų:
+
+1. Trumpos žinių bazės apie verslą (dažniausi klausimai ir faktai).
+2. Vieno gero, daugkartinio prompto.
+3. Aiškios taisyklės: AI **ruošia juodraštį**, žmogus **patvirtina**.
+
+## 1 žingsnis: surašyk dažniausius klausimus
+
+Pradėk ne nuo technologijų, o nuo popieriaus. Per dieną pasižymėk kiekvieną klientų klausimą. Po savaitės turėsi 15–20 klausimų, kurie sudaro 80 % viso srauto.
+
+Surašyk juos į paprastą struktūrą — tai bus tavo „žinių bazė“, kurią paduosi modeliui kaip kontekstą:
+
+```json title="zinios.json"
+{
+  "darbo_laikas": "I–V 7:30–19:00, VI–VII 9:00–17:00",
+  "augalinis_pienas": "Turime avižų, sojų ir migdolų pieną (+0,50 €).",
+  "tortai": "Tortus gaminame pagal užsakymą, užsakyti reikia prieš 3 dienas.",
+  "vietos": "Rezervacijų nepriimame, bet darbo dienų rytais vietų beveik visada yra.",
+  "tonas": "Šiltas, draugiškas, kreipiamės „tu“, atsakymas trumpas."
+}
+```
+
+## 2 žingsnis: parašyk vieną gerą promptą
+
+Geras promptas — tai ne magija, o struktūra. Beveik visada jį sudaro keturios dalys: **vaidmuo, kontekstas, tikslas ir formatas**.
+
+<ProseImage
+  src="/images/prompto-struktura.svg"
+  alt="Schema, vaizduojanti keturias gero prompto dalis: vaidmuo, kontekstas, tikslas ir formatas"
+  caption="Gero prompto anatomija — tos pačios keturios dalys tinka beveik bet kuriai užduočiai."
+/>
+
+Štai daugkartinis šablonas, į kurį tereikia įdėti kliento žinutę:
+
+```text title="Atsakymo promptas"
+Tu esi „Pas Joną“ kavinės darbuotojas. Atsakai šiltai ir trumpai, kreipiesi „tu“.
+
+Žinių bazė (naudok TIK šiuos faktus):
+{čia įklijuoji zinios.json turinį}
+
+Kliento žinutė:
+"{čia įklijuoji kliento klausimą}"
+
+Užduotis: parašyk mandagų atsakymą lietuviškai. Jei atsakymo nėra žinių
+bazėje — nesugalvok jo, o pasiūlyk parašyti tiesiogiai telefonu.
+```
+
+Atkreipk dėmesį į paskutinį sakinį — jis svarbiausias.
+
+<Callout type="tip" title="Patarimas">
+
+Visada įrašyk taisyklę „jei nežinai — nesugalvok“. Tai paprasčiausias būdas sumažinti AI „prasimanymus“ (vadinamąsias haliucinacijas) ir apsaugoti savo reputaciją.
+
+</Callout>
+
+## 3 žingsnis: sujunk į vieną mygtuką (nebūtina, bet patogu)
+
+Daug verslų lieka ties 2 žingsniu — ir to visiškai pakanka. Bet jei nori, kad atsakymas pasiruoštų automatiškai, tą patį promptą gali iškviesti programiškai. Štai minimalus pavyzdys techniškesniam skaitytojui:
+
+```js title="atsakymas.js"
+const atsakymas = await fetch("https://api.pavyzdys.ai/v1/messages", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    model: "pasirinktas-modelis",
+    system: sistemosPromptas, // vaidmuo + žinių bazė
+    messages: [{ role: "user", content: kliento_zinute }],
+  }),
+}).then((r) => r.json());
+
+console.log(atsakymas.tekstas); // paruoštas juodraštis peržiūrai
+```
+
+<Callout type="warning">
+
+Niekada neperduok modeliui jautrių asmens duomenų (mokėjimų, asmens kodų) be aiškaus teisinio pagrindo. Klientų aptarnavimui beveik niekada to nereikia — užtenka klausimo teksto.
+
+</Callout>
+
+## Rezultatas
+
+Po savaitės „Pas Joną“ atsakymų ruošimas iš ~60 minučių per dieną sutrumpėjo iki ~10. Svarbiausia — atsakymai tapo **vienodo, atpažįstamo tono**, nesvarbu, kas budi. Rūta nebijo atostogų: naujas darbuotojas su tuo pačiu promptu atsako taip pat gerai.
+
+Esmė ne ta, kad AI pakeičia žmogų. Esmė ta, kad jis nuima nuobodžią, pasikartojančią dalį — o žmogus lieka ten, kur jo tikrai reikia.

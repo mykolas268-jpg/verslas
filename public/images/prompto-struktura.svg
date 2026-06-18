@@ -1,0 +1,56 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gero prompto struktūros schema">
+  <defs>
+    <linearGradient id="accentBlock" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d6e63"/>
+      <stop offset="1" stop-color="#0f8a7c"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="#f7f5f1"/>
+  <rect x="1" y="1" width="1198" height="748" fill="none" stroke="#e3ded6" stroke-width="2"/>
+
+  <text x="80" y="96" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#1a1815">Gero prompto anatomija</text>
+  <rect x="80" y="116" width="64" height="5" rx="2.5" fill="#0d6e63"/>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <!-- step 1 -->
+    <g transform="translate(80 170)">
+      <rect width="1040" height="118" rx="18" fill="#ffffff" stroke="#e3ded6" stroke-width="2"/>
+      <rect width="10" height="118" rx="5" fill="url(#accentBlock)"/>
+      <circle cx="70" cy="59" r="26" fill="#0d6e63"/>
+      <text x="70" y="69" text-anchor="middle" font-size="26" fill="#ffffff" font-weight="700">1</text>
+      <text x="124" y="52" font-size="28" fill="#1a1815" font-weight="700">VAIDMUO</text>
+      <text x="124" y="86" font-size="20" fill="#66625b">Kas yra modelis? „Tu esi patyręs klientų aptarnavimo specialistas.“</text>
+    </g>
+
+    <!-- step 2 -->
+    <g transform="translate(80 308)">
+      <rect width="1040" height="118" rx="18" fill="#ffffff" stroke="#e3ded6" stroke-width="2"/>
+      <rect width="10" height="118" rx="5" fill="url(#accentBlock)"/>
+      <circle cx="70" cy="59" r="26" fill="#0d6e63"/>
+      <text x="70" y="69" text-anchor="middle" font-size="26" fill="#ffffff" font-weight="700">2</text>
+      <text x="124" y="52" font-size="28" fill="#1a1815" font-weight="700">KONTEKSTAS</text>
+      <text x="124" y="86" font-size="20" fill="#66625b">Duomenys ir aplinkybės: produktas, klientas, ankstesnis pokalbis.</text>
+    </g>
+
+    <!-- step 3 -->
+    <g transform="translate(80 446)">
+      <rect width="1040" height="118" rx="18" fill="#ffffff" stroke="#e3ded6" stroke-width="2"/>
+      <rect width="10" height="118" rx="5" fill="url(#accentBlock)"/>
+      <circle cx="70" cy="59" r="26" fill="#0d6e63"/>
+      <text x="70" y="69" text-anchor="middle" font-size="26" fill="#ffffff" font-weight="700">3</text>
+      <text x="124" y="52" font-size="28" fill="#1a1815" font-weight="700">TIKSLAS</text>
+      <text x="124" y="86" font-size="20" fill="#66625b">Ko konkrečiai nori: „Parašyk mandagų atsakymą ir pasiūlyk sprendimą.“</text>
+    </g>
+
+    <!-- step 4 -->
+    <g transform="translate(80 584)">
+      <rect width="1040" height="118" rx="18" fill="#ffffff" stroke="#e3ded6" stroke-width="2"/>
+      <rect width="10" height="118" rx="5" fill="url(#accentBlock)"/>
+      <circle cx="70" cy="59" r="26" fill="#0d6e63"/>
+      <text x="70" y="69" text-anchor="middle" font-size="26" fill="#ffffff" font-weight="700">4</text>
+      <text x="124" y="52" font-size="28" fill="#1a1815" font-weight="700">FORMATAS</text>
+      <text x="124" y="86" font-size="20" fill="#66625b">Kokios formos rezultatas: ilgis, tonas, kalba, sąrašas ar pastraipa.</text>
+    </g>
+  </g>
+</svg>

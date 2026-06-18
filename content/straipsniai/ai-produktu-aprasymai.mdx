@@ -1,0 +1,97 @@
+---
+title: "Produktų aprašymai su AI: tekstai, kurie parduoda, o ne tik užpildo lentelę"
+slug: ai-produktu-aprasymai
+date: 2026-06-14
+excerpt: "Maža e-parduotuvė turėjo 80 produktų be aprašymų. Štai kaip su vienu promptu paruošti vientiso stiliaus, SEO draugiškus tekstus — greitai ir nenuobodžiai."
+tags: ["Rinkodara", "Turinys", "Promptai"]
+cover: /images/ai-produktu-aprasymai.svg
+draft: false
+---
+
+<Callout type="sample">
+
+Pavyzdinis straipsnis — pakeisk savo turiniu. Tai brand'o pavyzdys, rodantis straipsnio struktūrą ir toną.
+
+</Callout>
+
+Rankų darbo žvakių parduotuvė „Žvakių namai“ turėjo gražias nuotraukas, bet 80 produktų kortelių su tuščiu aprašymo lauku. Savininkas Tomas bandė rašyti pats — po dešimto aprašymo visi tekstai pradėjo skambėti vienodai nuobodžiai: „Kokybiška sojų vaško žvakė. Puiki dovana.“
+
+Problema ne ta, kad reikia rašyti. Problema ta, kad reikia rašyti **80 kartų vienodu stiliumi, bet ne vienodais žodžiais** — ir dar taip, kad „Google“ tave rastų. Čia AI tikrai stipri.
+
+## Ką darysime
+
+Sukursime **vieną šabloną**, kuris bet kurio produkto duomenis paverčia paruoštu aprašymu. Tas pats balsas, ta pati struktūra, skirtingi žodžiai.
+
+<ProseImage
+  src="/images/ai-turinio-srautas.svg"
+  alt="Trijų žingsnių schema: produkto duomenys, AI promptas, paruoštas aprašymas"
+  caption="Vieną kartą sukurtą šabloną kartoji visiems produktams — keičiasi tik įvedami duomenys."
+/>
+
+## 1 žingsnis: apibrėžk prekės ženklo balsą
+
+Prieš generuodamas tekstus, vienoje vietoje surašyk, **kaip kalba tavo prekės ženklas**. Be to AI rašys „vidutiniškai“ — taisyklingai, bet be charakterio.
+
+```text title="balsas.txt"
+Tonas: jaukus, ramus, šiek tiek poetiškas, bet konkretus.
+Kreipinys: „jūs“.
+Venk: štampų „aukščiausia kokybė“, „puiki dovana“, šauktukų.
+Visada paminėk: medžiagą, degimo laiką, kvapo charakterį.
+Pabaiga: viena švelni eilutė apie tai, kokią nuotaiką kuria žvakė.
+```
+
+Skirtumas tarp prasto ir gero aprašymo dažniausiai yra būtent balse:
+
+| Prastai (be balso) | Gerai (su balsu) |
+| --- | --- |
+| Kokybiška sojų žvakė. Puiki dovana. | Sojų vaško žvakė su švelniu bergamotės ir kedro kvapu. Dega apie 40 valandų ir lėtai pripildo kambarį šiltos, vakarinės ramybės. |
+
+## 2 žingsnis: vienas šablonas visiems
+
+Dabar sujungiame balsą, taisykles ir produkto duomenis į vieną daugkartinį promptą:
+
+```text title="aprašymo promptas"
+Tu esi „Žvakių namų“ tekstų kūrėjas. Rašyk pagal šį balsą:
+{čia įklijuoji balsas.txt}
+
+Produkto duomenys:
+- Pavadinimas: {pavadinimas}
+- Medžiaga: {medžiaga}
+- Degimo laikas: {valandos}
+- Kvapas: {kvapas}
+
+Užduotis: parašyk 2–3 sakinių aprašymą lietuviškai pagal balsą.
+Įtrauk raktažodį „{raktažodis}“ natūraliai, neperspausk.
+Nesugalvok savybių, kurių nėra duomenyse.
+```
+
+<Callout type="tip" title="SEO patarimas">
+
+Vieną pagrindinį raktažodį (pvz., „sojų vaško žvakė“) paduok kaip atskirą lauką. Taip jis natūraliai atsidurs tekste, o tu nekartosi to paties žodžio visuose aprašymuose iki įgrisimo.
+
+</Callout>
+
+## 3 žingsnis: generuok partijomis
+
+Kai šablonas veikia su vienu produktu, tą patį gali pakartoti visam sąrašui. Techniškesniam skaitytojui — minimalus ciklas, kuris pereina visas eilutes iš lentelės:
+
+```python title="generuoti.py"
+import csv
+
+for eilute in csv.DictReader(open("produktai.csv", encoding="utf-8")):
+    promptas = sablonas.format(**eilute)      # įstato produkto duomenis
+    aprasymas = ai_klientas.generuoti(promptas)  # iškviečia modelį
+    issaugoti(eilute["pavadinimas"], aprasymas)  # įrašo peržiūrai
+```
+
+<Callout type="warning">
+
+AI nežino tavo produkto geriau už tave. Visada peržiūrėk sugeneruotus tekstus — ypač skaičius (degimo laiką, dydžius, sudėtį). Modelis gali įtikinamai parašyti tai, ko nėra.
+
+</Callout>
+
+## Rezultatas
+
+Per vieną popietę „Žvakių namai“ turėjo 80 vientiso stiliaus aprašymų — Tomas tik peržiūrėjo ir pataisė keletą. Tekstai nustojo skambėti kaip kopijos, o parduotuvė pradėjo geriau rodytis paieškoje.
+
+Tas pats principas, kaip ir [klientų aptarnavime](/straipsniai/ai-klientu-aptarnavimas): AI paruošia juodraštį, o žmogus prideda skonį ir patvirtina. Šabloną sukuri kartą — naudojiesi šimtus kartų.

@@ -1,0 +1,45 @@
+{
+  "name": "verslas-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^3.1.1",
+    "js-yaml": "^4.1.0",
+    "next": "15.5.19",
+    "next-mdx-remote": "^6.0.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "reading-time": "^1.5.0",
+    "rehype-pretty-code": "^0.14.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "shiki": "^1.24.0",
+    "unified": "^11.0.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.17.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.5.19",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}
