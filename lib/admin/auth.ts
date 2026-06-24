@@ -1,13 +1,16 @@
 import crypto from 'node:crypto';
 import { cookies } from 'next/headers';
+import { MIN_SESSION_SECRET_LENGTH } from './config';
 
 export const SESSION_COOKIE = 'vsl_admin';
 export const SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours (seconds)
 
 function getSecret(): string {
   const secret = process.env.SESSION_SECRET;
-  if (!secret || secret.length < 16) {
-    throw new Error('SESSION_SECRET is not set (needs at least 16 characters).');
+  if (!secret || secret.length < MIN_SESSION_SECRET_LENGTH) {
+    throw new Error(
+      `SESSION_SECRET is missing or too short (needs at least ${MIN_SESSION_SECRET_LENGTH} characters).`,
+    );
   }
   return secret;
 }

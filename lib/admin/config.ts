@@ -24,6 +24,14 @@ export function githubConfig(): GithubConfig | null {
   return null;
 }
 
+/** SESSION_SECRET must be at least this long to sign session cookies. */
+export const MIN_SESSION_SECRET_LENGTH = 16;
+
 export function isAdminConfigured(): boolean {
-  return Boolean(process.env.ADMIN_PASSWORD && process.env.SESSION_SECRET);
+  const secret = process.env.SESSION_SECRET;
+  return Boolean(
+    process.env.ADMIN_PASSWORD &&
+      secret &&
+      secret.length >= MIN_SESSION_SECRET_LENGTH,
+  );
 }
