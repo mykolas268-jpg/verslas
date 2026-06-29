@@ -50,13 +50,22 @@ export async function POST(req: Request) {
   }
 
   attempts.delete(ip);
-  const res = NextResponse.json({ ok: true });
-  res.cookies.set(SESSION_COOKIE, createSessionToken(), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: SESSION_MAX_AGE,
-  });
-  return res;
+  try {
+    const token = createSessionToken();
+    const res = NextResponse.json({ ok: true });
+    res.cookies.set(SESSION_COOKIE, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: SESSION_MAX_AGE,
+    });
+    return res;
+  } catch {
+    // e.g. SESSION_SECRET too short — return a clean message, not a raw 500.
+    return NextResponse.json(
+      { error: 'Serverio konfigūracijos klaida (patikrink SESSION_SECRET).' },
+      { status: 500 },
+    );
+  }
 }

@@ -12,15 +12,21 @@ export const ogContentType = 'image/png';
  * fall back across them so Lithuanian diacritics render correctly.
  */
 export async function loadOgFonts() {
-  const [latin, latinExt] = await Promise.all([
-    readFile(path.join(FONT_DIR, 'inter-latin-600.woff')),
-    readFile(path.join(FONT_DIR, 'inter-latin-ext-600.woff')),
-  ]);
+  try {
+    const [latin, latinExt] = await Promise.all([
+      readFile(path.join(FONT_DIR, 'inter-latin-600.woff')),
+      readFile(path.join(FONT_DIR, 'inter-latin-ext-600.woff')),
+    ]);
 
-  return [
-    { name: 'Inter', data: latin, weight: 600 as const, style: 'normal' as const },
-    { name: 'Inter', data: latinExt, weight: 600 as const, style: 'normal' as const },
-  ];
+    return [
+      { name: 'Inter', data: latin, weight: 600 as const, style: 'normal' as const },
+      { name: 'Inter', data: latinExt, weight: 600 as const, style: 'normal' as const },
+    ];
+  } catch {
+    // If the font files can't be read at runtime, fall back to ImageResponse's
+    // default font rather than failing OG image generation entirely.
+    return [];
+  }
 }
 
 /** Shared Open Graph card layout (Satori-compatible inline styles only). */

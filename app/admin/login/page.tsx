@@ -32,8 +32,9 @@ export default async function AdminLoginPage() {
             <p className="font-medium">Administravimas dar nesukonfigūruotas.</p>
             <p className="mt-2 text-muted">
               Nustatyk <code className="text-ink">ADMIN_PASSWORD</code> ir{' '}
-              <code className="text-ink">SESSION_SECRET</code> aplinkos kintamuosius
-              (žr. <code className="text-ink">.env.example</code>).
+              <code className="text-ink">SESSION_SECRET</code> (bent 16 simbolių)
+              aplinkos kintamuosius (žr.{' '}
+              <code className="text-ink">.env.example</code>).
             </p>
           </div>
         )}
