@@ -1,0 +1,82 @@
+---
+title: 'AI video turai brokeriams: iš nuotraukų — vaizdo įrašas, tarsi filmuotas einant per namą'
+slug: ai-video-turai-brokeriams
+date: '2026-07-09'
+excerpt: NT skelbimai su video gauna daugiau dėmesio, bet operatorius kainuoja. Kaip brokeriui iš turimų nuotraukų sukurti sklandų AI video turą per butą ar namą.
+tags:
+  - Nekilnojamasis turtas
+  - Vaizdo įrašai
+  - Promptai
+draft: false
+---
+
+Nekilnojamojo turto brokerė Ieva turi aštuonis aktyvius objektus. Visi su profesionaliomis nuotraukomis, bet nė vienas — su vaizdo įrašu. Operatorius su gimbalu vienam objektui kainuoja nuo 150 €, o pigesnė alternatyva — telefonu filmuotas drebantis „turas“ — atrodo prasčiau nei jokio video.
+
+Tuo tarpu skelbimai su vaizdo įrašu socialiniuose tinkluose surenka kelis kartus daugiau peržiūrų ir užklausų. Čia atsiranda nauja galimybė: **AI video generavimas iš nuotraukų**. Modernūs modeliai (Veo, Kling, Runway, Luma ir kiti) iš vienos statiškos nuotraukos sukuria kelių sekundžių klipą su sklandžiu kameros judesiu — tarsi operatorius su stabilizatoriumi lėtai eitų per kambarį.
+
+## Ką darysime
+
+Iš jau turimų objekto nuotraukų sukursime **30–60 sekundžių video turą**: kamera „įplaukia“ pro duris, slenka per svetainę, pasisuka virtuvėje, sustoja prie vaizdo pro langą. Trys žingsniai: atrenkame nuotraukas, sugeneruojame klipus su judesio promptu, sumontuojame į vieną turą.
+
+<ProseImage
+  src="/images/ai-video-turu-srautas.svg"
+  alt="Trijų žingsnių schema: objekto nuotraukos, AI judesio promptas, sumontuotas video turas"
+  caption="Kiekviena nuotrauka tampa 5–10 sekundžių klipu su kameros judesiu — klipai sujungiami į vieną turą."
+/>
+
+## 1 žingsnis: atrink nuotraukas kaip maršrutą
+
+Negalvok apie nuotraukas kaip apie galeriją — galvok kaip apie **maršrutą, kuriuo eitų pirkėjas**. Natūrali seka: įėjimas → koridorius → svetainė → virtuvė → miegamieji → vonia → balkonas ar kiemas.
+
+Geriausiai veikia:
+
+- **Plačios, horizontalios nuotraukos** — kamerai reikia „erdvės“ judėti.
+- **Kadrai su gyliu** — matosi durys, koridorius ar kitas kambarys tolumoje. Į juos kamera gali „eiti“.
+- **Tolygus apšvietimas** — dienos šviesa, be stiprių blyksčių.
+
+Venk stambių detalių planų (maišytuvas, rankena) — iš jų judesio nepadarysi, jie geriau tinka statiškiems intarpams.
+
+## 2 žingsnis: judesio promptas
+
+AI video modeliams svarbiausia pasakyti ne *kas* nuotraukoje (tą jie mato patys), o **kaip juda kamera**. Promptą rašyk angliškai — video modeliai su anglų kalba dirba pastebimai tiksliau. Štai daugkartinis šablonas:
+
+```text title="judesio promptas"
+Slow, smooth camera dolly forward through the {kambarys},
+as if filmed on a gimbal by a professional videographer.
+Steady, cinematic real estate walkthrough.
+Natural daylight, realistic reflections.
+No people, no added objects, keep the room exactly as in the photo.
+5 seconds, subtle motion only.
+```
+
+Skirtumas tarp prasto ir gero prompto — būtent judesio aprašyme:
+
+| Prastai | Gerai |
+| --- | --- |
+| Make a video of this living room. | Slow dolly forward through the living room toward the window, steady gimbal shot, natural daylight, no people, keep everything as in the photo. |
+
+<Callout type="tip" title="Kameros judesių žodynas">
+Keli judesiai, kuriuos modeliai supranta geriausiai: **dolly forward / dolly in** (kamera lėtai artėja), **pan left / right** (sukasi vietoje), **orbit** (apeina objektą ratu), **crane up** (kyla aukštyn). Vienam klipui — **vienas** judesys. Kelių judesių kombinacijos dažniausiai baigiasi nenatūraliu „plaukiojimu“.
+</Callout>
+
+Generuok po 2–3 variantus kiekvienai nuotraukai ir rinkis sklandžiausią. Nepataikė iš pirmo karto — normalu; klipas trunka sekundes, o ne valandas kaip filmavimas.
+
+## 3 žingsnis: sumontuok į turą
+
+Turi 6–8 klipus po 5–10 sekundžių. Dabar sujunk juos ta pačia tvarka, kuria žmogus eitų per būstą:
+
+1. **Pradžia** — fasadas arba įėjimas (pirmos 3 sekundės nulemia, ar žiūrovas liks).
+2. **Kambariai** — svetainė, virtuvė, miegamieji. Tarp klipų — paprastas persidengimas (*cross dissolve*), be įmantrių efektų.
+3. **Pabaiga** — stipriausias kadras (vaizdas pro langą, terasa) ir užrašas su kaina bei kontaktu.
+
+Montažui užtenka nemokamo CapCut ar DaVinci Resolve. Pridėk ramų foninį takelį, o kiekvieno kambario pradžioje — trumpą užrašą („Svetainė · 24 m²“). Vertikalią 9:16 versiją socialiniams tinklams gausi iš tų pačių klipų.
+
+<Callout type="warning">
+AI negali „pagražinti“ parduodamo turto. Jei modelis sugeneravo naują grindų dangą, pridėjo baldų ar „sutvarkė“ sienos defektą — tokio klipo naudoti negalima. Pirkėjas atvyks į realų būstą, ir kiekvienas neatitikimas kainuos pasitikėjimą, o kraštutiniu atveju — ir teisinių problemų dėl klaidinančios reklamos. Peržiūrėk kiekvieną klipą kadrą po kadro: kamera gali judėti, bet butas privalo likti tas pats.
+</Callout>
+
+## Rezultatas
+
+Vienam objektui Ieva dabar skiria apie valandą: 15 minučių nuotraukų atrankai, 20 minučių klipų generavimui, pusvalandį montažui. Vietoj 150 € už operatorių — kelių eurų vertės generavimo kreditai. Skelbimai su video turais surenka daugiau peržiūrų, o į apžiūras ateina žmonės, kurie būstą jau „perėjo“ ekrane — ir todėl rimtesni.
+
+Principas tas pats, kaip ir [produktų aprašymuose](/straipsniai/ai-produktu-aprasymai): AI padaro juodraštį — šiuo atveju judesį, — o žmogus atrenka, patikrina ir atsako už tai, kad turinys atitiktų tikrovę. Judesio promptą susikuri kartą — naudoji kiekvienam naujam objektui.
