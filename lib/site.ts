@@ -21,20 +21,27 @@ export const siteConfig = {
     'Konkretūs, pavyzdžiais paremti straipsniai apie tai, kaip naudoti dirbtinį intelektą versle. Realūs scenarijai, žingsnis po žingsnio ir paruošti promptai.',
   locale: 'lt_LT',
   lang: 'lt',
+  /**
+   * Where order/contact submissions go. Override on Vercel with
+   * NEXT_PUBLIC_CONTACT_EMAIL; the branded fallback can be set up as a
+   * forwarding address on the domain.
+   */
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'labas@verslas.ai',
   nav: [
     { href: '/', label: 'Pradžia' },
+    { href: '/reklaminis-video', label: 'Video' },
     { href: '/straipsniai', label: 'Straipsniai' },
     { href: '/kursai', label: 'Kursai' },
     { href: '/apie', label: 'Apie' },
   ] satisfies NavItem[],
   /** Default values for the reusable <CTA /> funnel component. */
   cta: {
-    eyebrow: 'Nori giliau?',
-    title: 'Peržiūrėk mūsų kursą',
+    eyebrow: 'Reklaminis video',
+    title: 'Reklaminis video tavo verslui — 99 €',
     description:
-      'Praktinis kursas, kuris padės pritaikyti dirbtinį intelektą tavo versle — nuo pirmo prompto iki realaus rezultato.',
-    label: 'Peržiūrėk mūsų kursą',
-    href: '/kursai',
+      'Trumpas, reklamai paruoštas klipas per 4 darbo dienas. Parodyk produktą ten, kur klientai jau žiūri — „Instagram", „TikTok" ir „Facebook".',
+    label: 'Užsisakyk video',
+    href: '/reklaminis-video',
   },
   author: {
     name: 'verslas.ai komanda',

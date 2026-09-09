@@ -1,0 +1,67 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI vaizdo turai nekilnojamojo turto brokeriams">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#114b54"/>
+      <stop offset="1" stop-color="#0a2f3a"/>
+    </linearGradient>
+    <radialGradient id="glow3" cx="0.2" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#34d3c0" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#34d3c0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots3" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#a7eee6" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg3)"/>
+  <rect width="1200" height="750" fill="url(#dots3)"/>
+  <rect width="1200" height="750" fill="url(#glow3)"/>
+
+  <!-- video player frame -->
+  <g>
+    <rect x="620" y="150" width="450" height="450" rx="28" fill="#ffffff" fill-opacity="0.10"/>
+    <rect x="620" y="150" width="450" height="450" rx="28" fill="none" stroke="#bdeee8" stroke-opacity="0.25" stroke-width="1.5"/>
+
+    <!-- house inside the player -->
+    <g fill="#16b8a4" fill-opacity="0.85">
+      <path d="M845 250 990 370h-40v130H735V370h-40Z"/>
+    </g>
+    <rect x="800" y="420" width="45" height="80" rx="6" fill="#0a2f3a" fill-opacity="0.7"/>
+    <rect x="880" y="420" width="50" height="45" rx="6" fill="#d8f5f0" fill-opacity="0.55"/>
+
+    <!-- play button -->
+    <circle cx="845" cy="405" r="52" fill="#0a2f3a" fill-opacity="0.55"/>
+    <circle cx="845" cy="405" r="52" fill="none" stroke="#7ee7d6" stroke-width="3"/>
+    <path d="M830 380l45 25-45 25Z" fill="#7ee7d6"/>
+
+    <!-- progress bar -->
+    <rect x="656" y="550" width="378" height="8" rx="4" fill="#d8f5f0" fill-opacity="0.25"/>
+    <rect x="656" y="550" width="180" height="8" rx="4" fill="#7ee7d6"/>
+  </g>
+
+  <!-- photo stack turning into video -->
+  <g>
+    <rect x="140" y="240" width="220" height="150" rx="14" transform="rotate(-6 250 315)" fill="#ffffff" fill-opacity="0.10" stroke="#bdeee8" stroke-opacity="0.3"/>
+    <rect x="165" y="270" width="220" height="150" rx="14" transform="rotate(-2 275 345)" fill="#ffffff" fill-opacity="0.14" stroke="#bdeee8" stroke-opacity="0.35"/>
+    <rect x="190" y="300" width="220" height="150" rx="14" fill="#16b8a4" fill-opacity="0.5" stroke="#bdeee8" stroke-opacity="0.4"/>
+    <path d="M215 415l55-55 40 35 45-50 45 70Z" fill="#d8f5f0" fill-opacity="0.6"/>
+    <circle cx="255" cy="335" r="12" fill="#d8f5f0" fill-opacity="0.7"/>
+  </g>
+
+  <!-- motion arrow -->
+  <g stroke="#7ee7d6" stroke-opacity="0.6" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M440 380c60-30 100-30 150-10"/>
+    <path d="M572 358l22 10-14 20"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(160 130)" fill="#bdeee8" fill-opacity="0.9">
+    <path d="M36 0c3.6 27 10.8 34.2 37.8 37.8C46.8 41.4 39.6 48.6 36 75.6 32.4 48.6 25.2 41.4-1.8 37.8 25.2 34.2 32.4 27 36 0Z"/>
+  </g>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#bdeee8">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#34d3c0"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · VIDEO TURAI</text>
+  </g>
+</svg>

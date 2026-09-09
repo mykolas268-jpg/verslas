@@ -37,12 +37,12 @@ export default function HomePage() {
             kuriuos gali pritaikyti savo versle jau šiandien.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/straipsniai" className="btn-accent">
-              Skaityti straipsnius
+            <Link href="/reklaminis-video" className="btn-accent">
+              Užsisakyk reklaminį video
               <IconArrowRight size={18} />
             </Link>
-            <Link href="/apie" className="btn-outline">
-              Apie projektą
+            <Link href="/straipsniai" className="btn-outline">
+              Skaityti straipsnius
             </Link>
           </div>
         </Reveal>
