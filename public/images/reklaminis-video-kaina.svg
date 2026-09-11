@@ -1,0 +1,58 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dirbtinis intelektas reklaminiam video">
+  <defs>
+    <linearGradient id="bgv" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#114b54"/>
+      <stop offset="1" stop-color="#0a2f3a"/>
+    </linearGradient>
+    <radialGradient id="glowv" cx="0.2" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#34d3c0" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#34d3c0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dotsv" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#a7eee6" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgv)"/>
+  <rect width="1200" height="750" fill="url(#dotsv)"/>
+  <rect width="1200" height="750" fill="url(#glowv)"/>
+
+  <!-- video player frame -->
+  <g>
+    <rect x="672" y="150" width="398" height="300" rx="28" fill="#ffffff" fill-opacity="0.10"/>
+    <rect x="672" y="150" width="398" height="300" rx="28" fill="none" stroke="#bdeee8" stroke-opacity="0.25" stroke-width="1.5"/>
+
+    <!-- play button -->
+    <circle cx="871" cy="300" r="60" fill="#16b8a4" fill-opacity="0.9"/>
+    <path d="M855 270 L855 330 L905 300 Z" fill="#0a2f3a"/>
+
+    <!-- timeline -->
+    <rect x="710" y="410" width="322" height="10" rx="5" fill="#d8f5f0" fill-opacity="0.3"/>
+    <rect x="710" y="410" width="150" height="10" rx="5" fill="#7ee7d6"/>
+    <circle cx="860" cy="415" r="11" fill="#7ee7d6"/>
+  </g>
+
+  <!-- subtitle bar (subtitrai lietuviškai) -->
+  <g>
+    <rect x="732" y="482" width="278" height="34" rx="10" fill="#0a2f3a" fill-opacity="0.55"/>
+    <rect x="756" y="495" width="230" height="9" rx="4.5" fill="#d8f5f0" fill-opacity="0.85"/>
+  </g>
+
+  <!-- script / generating lines -->
+  <g stroke="#7ee7d6" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round">
+    <path d="M150 300h360"/>
+    <path d="M150 350h300"/>
+    <path d="M150 400h340"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(160 150)" fill="#bdeee8" fill-opacity="0.9">
+    <path d="M36 0c3.6 27 10.8 34.2 37.8 37.8C46.8 41.4 39.6 48.6 36 75.6 32.4 48.6 25.2 41.4-1.8 37.8 25.2 34.2 32.4 27 36 0Z"/>
+  </g>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#bdeee8">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#34d3c0"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · VIDEO</text>
+  </g>
+</svg>
