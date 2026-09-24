@@ -40,7 +40,8 @@ export async function submitInquiry(payload: Record<string, string>): Promise<Su
       body: JSON.stringify(payload),
     });
     if (response.ok) return 'sent';
-    if (response.status === 503 || response.status === 502) return 'fallback';
+    // Not configured, delivery failed or rate limited: the visitor can still send an email.
+    if (response.status === 503 || response.status === 502 || response.status === 429) return 'fallback';
     return 'error';
   } catch {
     return 'fallback';

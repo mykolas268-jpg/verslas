@@ -9,15 +9,28 @@ export const dynamic = 'force-dynamic';
 
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_PER_WINDOW = 5;
-// Best-effort, per server instance. Enough to blunt a single noisy client.
+/** All clients together: caps a flood from many addresses (Telegram spam). */
+const MAX_TOTAL_PER_WINDOW = 30;
+const MAX_TRACKED_CLIENTS = 5_000;
+// Best-effort, per server instance. Enough to blunt a noisy client or a burst.
 const recent = new Map<string, number[]>();
+let total: number[] = [];
 
 function rateLimited(key: string): boolean {
   const now = Date.now();
+  total = total.filter((time) => now - time < WINDOW_MS);
+  if (recent.size > MAX_TRACKED_CLIENTS) {
+    // Drop clients with no hit inside the window so the map cannot grow forever.
+    for (const [client, times] of recent) {
+      if (!times.some((time) => now - time < WINDOW_MS)) recent.delete(client);
+    }
+  }
   const hits = (recent.get(key) ?? []).filter((time) => now - time < WINDOW_MS);
   hits.push(now);
   recent.set(key, hits);
-  return hits.length > MAX_PER_WINDOW;
+  if (hits.length > MAX_PER_WINDOW || total.length >= MAX_TOTAL_PER_WINDOW) return true;
+  total.push(now);
+  return false;
 }
 
 function sameOrigin(req: Request): boolean {
