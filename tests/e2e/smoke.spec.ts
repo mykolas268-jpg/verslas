@@ -45,6 +45,26 @@ test.describe('pages load and render their key heading', () => {
     ).toBeVisible();
   });
 
+  test('editorial policy', async ({ page }) => {
+    const response = await page.goto('/kaip-rengiame-straipsnius');
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'Kaip rengiame straipsnius' }),
+    ).toBeVisible();
+  });
+
+  test('privacy policy', async ({ page }) => {
+    const response = await page.goto('/privatumo-politika');
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'Privatumo politika' }),
+    ).toBeVisible();
+    // Linked from every page footer.
+    await expect(
+      page.getByRole('contentinfo').getByRole('link', { name: 'Privatumo politika' }),
+    ).toBeVisible();
+  });
+
   test('404 returns 404 status and on-brand Lithuanian page', async ({ page }) => {
     const response = await page.goto('/sis-puslapis-neegzistuoja');
     expect(response?.status()).toBe(404);

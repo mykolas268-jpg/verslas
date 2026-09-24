@@ -19,6 +19,7 @@ export const authors: Record<string, Author> = {
   'mykolas-gustas': {
     id: 'mykolas-gustas',
     name: 'Mykolas Gustas',
+    url: '/apie#autorius',
     sameAs: [],
   },
 };

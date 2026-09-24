@@ -25,7 +25,15 @@ const CONTENT_DIR = path.join(ROOT, 'content', 'straipsniai');
 const PUBLIC_DIR = path.join(ROOT, 'public');
 
 const ALLOWED_COMPONENTS = new Set(['Callout', 'ProseImage']);
-const STATIC_ROUTES = new Set(['/', '/reklaminis-video', '/straipsniai', '/kursai', '/apie']);
+const STATIC_ROUTES = new Set([
+  '/',
+  '/reklaminis-video',
+  '/straipsniai',
+  '/kursai',
+  '/apie',
+  '/kaip-rengiame-straipsnius',
+  '/privatumo-politika',
+]);
 const TITLE_SUFFIX = ' · verslas.ai';
 const MAX_TITLE = 60;
 const EXCERPT_MIN = 120;

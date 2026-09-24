@@ -23,6 +23,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: `${base}/kursai`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${base}/apie`, changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${base}/kaip-rengiame-straipsnius`, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${base}/privatumo-politika`, changeFrequency: 'yearly', priority: 0.2 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({

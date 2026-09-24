@@ -128,7 +128,13 @@ export default async function ArticlePage({
           {post.aiAssisted && author ? (
             <p className="mt-3 text-sm text-muted">
               Parengta naudojant dirbtinį intelektą. Faktus patikrino ir
-              redagavo {author.name}.
+              redagavo {author.name}.{' '}
+              <Link
+                href="/kaip-rengiame-straipsnius"
+                className="underline underline-offset-2 hover:text-ink"
+              >
+                Kaip rengiame straipsnius
+              </Link>
             </p>
           ) : null}
           {post.changeNote && post.updated ? (

@@ -35,6 +35,7 @@ ${articleLines}
 
 - [Visi straipsniai](${base}/straipsniai)
 - [Apie](${base}/apie)
+- [Kaip rengiame straipsnius](${base}/kaip-rengiame-straipsnius)
 - [RSS](${base}/straipsniai/rss.xml)
 `;
 
