@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const ARTICLE_SLUG = 'ai-klientu-aptarnavimas';
+const ARTICLE_SLUG = 'ai-video-turai-brokeriams';
 
 test.describe('pages load and render their key heading', () => {
   test('home', async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe('pages load and render their key heading', () => {
     const response = await page.goto(`/straipsniai/${ARTICLE_SLUG}`);
     expect(response?.status()).toBe(200);
     await expect(
-      page.getByRole('heading', { level: 1, name: /Kaip maža kavinė/i }),
+      page.getByRole('heading', { level: 1, name: /AI video turai brokeriams/i }),
     ).toBeVisible();
     // MDX rendered: a code block is present.
     await expect(page.locator('pre').first()).toBeVisible();
@@ -61,17 +61,21 @@ test.describe('search', () => {
     await page.goto('/straipsniai');
     const search = page.getByPlaceholder('Ieškoti straipsnių…');
 
-    // Both sample articles are present initially.
-    await expect(page.getByRole('heading', { name: /Kaip maža kavinė/i })).toBeVisible();
+    // Both articles are present initially.
     await expect(
-      page.getByRole('heading', { name: /Produktų aprašymai su AI/i }),
+      page.getByRole('heading', { name: /AI video turai brokeriams/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /Kiek kainuoja reklaminis video/i }),
     ).toBeVisible();
 
     // A known word narrows the list to the matching article.
-    await search.fill('kavinė');
-    await expect(page.getByRole('heading', { name: /Kaip maža kavinė/i })).toBeVisible();
+    await search.fill('brokeri');
     await expect(
-      page.getByRole('heading', { name: /Produktų aprašymai su AI/i }),
+      page.getByRole('heading', { name: /AI video turai brokeriams/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /Kiek kainuoja reklaminis video/i }),
     ).toHaveCount(0);
 
     // Gibberish shows the exact Lithuanian empty-state message.

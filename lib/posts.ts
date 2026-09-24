@@ -49,7 +49,7 @@ export const FrontmatterSchema = z
       .min(1, 'slug is required')
       .regex(
         /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-        'slug must be lowercase ascii kebab-case (e.g. "ai-klientu-aptarnavimas")',
+        'slug must be lowercase ascii kebab-case (e.g. "reklaminis-video-kaina")',
       ),
     date: IsoDateSchema,
     excerpt: z.string().min(1, 'excerpt is required'),
