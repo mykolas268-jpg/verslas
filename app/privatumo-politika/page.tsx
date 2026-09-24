@@ -36,9 +36,9 @@ export default function PrivacyPolicyPage() {
         </p>
 
         <h2>Kokius duomenis gauname ir kodėl</h2>
-        <h3>Kai rašote mums arba naudojate užsakymo formą</h3>
+        <h3>Kai rašote mums arba naudojate užsakymo ar laukiančiųjų sąrašo formą</h3>
         <p>
-          Užsakymo forma svetainėje duomenų mums tiesiogiai neperduoda: ji
+          Šiuo metu svetainės formos duomenų nesaugo ir niekam neperduoda: jos
           atidaro jūsų el. pašto programą su paruoštu laišku. Gavę laišką,
           tvarkome jame pateiktus duomenis — vardą, el. pašto adresą, telefono
           numerį (jei jį nurodote) ir žinutės turinį —, kad atsakytume į

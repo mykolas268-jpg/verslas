@@ -172,7 +172,8 @@ export default async function ArticlePage({
       </div>
 
       <div className="mx-auto mt-14 max-w-prose">
-        <CTA />
+        {/* The query parameter attributes inquiries to this article. */}
+        <CTA href={`${siteConfig.cta.href}?straipsnis=${post.slug}`} />
       </div>
 
       {prev || next ? (
