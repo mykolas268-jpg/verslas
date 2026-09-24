@@ -15,13 +15,13 @@ jobs:
     if: >-
       github.event.deployment_status.state == 'success' &&
       startsWith(github.event.deployment.environment, 'Production')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SITE: https://www.verslas.ai
       SHA: ${{ github.event.deployment.sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.deployment.sha }}
           fetch-depth: 2
@@ -56,7 +56,7 @@ jobs:
         if: steps.urls.outputs.count != '0'
         run: |
           set -euo pipefail
-          key_file=$(ls public/*.txt | xargs -n1 basename | grep -E '^[a-f0-9]{32}\.txt$' | head -n1)
+          key_file=$(find public -maxdepth 1 -type f -name '*.txt' -printf '%f\n' | grep -E '^[a-f0-9]{32}\.txt$' | head -n1)
           key="${key_file%.txt}"
           # Make sure the key file is live before pinging.
           curl -fsS --retry 5 --retry-delay 10 "$SITE/$key_file" | grep -qx "$key"
