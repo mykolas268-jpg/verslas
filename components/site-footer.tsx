@@ -44,8 +44,18 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {siteConfig.name}. Visos teisės saugomos.
+            © {year} {siteConfig.publisher.legalName} ({siteConfig.name}). Visos
+            teisės saugomos.
           </p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+            {siteConfig.legalNav.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="transition-colors hover:text-ink">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <p>Sukurta su dirbtinio intelekto pagalba 🇱🇹</p>
         </div>
       </div>

@@ -2,22 +2,27 @@
 
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { mailtoHref, sourceArticlePath, submitInquiry } from '@/lib/inquiry-client';
 import { IconArrowRight, IconCheck } from './icons';
 
-type Status = 'idle' | 'error' | 'success';
+/** `sent` = stored via the API; `mailto` = prefilled email opened instead. */
+type Status = 'idle' | 'error' | 'sending' | 'sent' | 'mailto' | 'failed';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Waitlist / newsletter capture. The submit handler is intentionally a
- * placeholder — the UI is final, only the integration point is pending.
+ * Waitlist capture. Posts to /api/uzklausa; when server delivery is not
+ * configured it opens a prefilled email, and says so — the visitor is never
+ * told they are on the list unless the request actually went somewhere.
  */
-export function WaitlistForm() {
+export function WaitlistForm({ list = 'kursai' }: { list?: string }) {
   const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState(''); // honeypot
   const [status, setStatus] = useState<Status>('idle');
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === 'sending') return;
     const trimmed = email.trim();
 
     if (!EMAIL_RE.test(trimmed)) {
@@ -25,13 +30,37 @@ export function WaitlistForm() {
       return;
     }
 
-    // TODO: connect backend — POST `trimmed` to a real waitlist/newsletter
-    // provider (an API route + Resend / ConvertKit / Mailchimp, etc.).
-    setStatus('success');
-    setEmail('');
+    const source = sourceArticlePath();
+    setStatus('sending');
+    const result = await submitInquiry({ kind: 'waitlist', list, email: trimmed, source, website });
+    if (result === 'sent') {
+      setStatus('sent');
+      setEmail('');
+    } else if (result === 'fallback') {
+      window.location.href = mailtoHref(`Laukiančiųjų sąrašas: ${list}`, [
+        'Noriu gauti pranešimą, kai startuosite.',
+        `El. paštas: ${trimmed}`,
+        source ? `(Atėjau iš: ${source})` : '',
+      ]);
+      setStatus('mailto');
+    } else {
+      setStatus('failed');
+    }
   }
 
-  if (status === 'success') {
+  if (status === 'mailto') {
+    return (
+      <div
+        role="status"
+        className="rounded-2xl border border-accent/40 bg-accent/10 px-5 py-4 text-sm text-ink"
+      >
+        Atsidarys tavo el. pašto programa. Išsiųsk paruoštą laišką, ir įrašysime
+        tave į sąrašą.
+      </div>
+    );
+  }
+
+  if (status === 'sent') {
     return (
       <div
         role="status"
@@ -70,11 +99,28 @@ export function WaitlistForm() {
             className="field"
           />
         </div>
-        <button type="submit" className="btn-accent shrink-0">
-          Užsiprenumeruoti
+        <button type="submit" className="btn-accent shrink-0" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Siunčiama…' : 'Užsiprenumeruoti'}
           <IconArrowRight size={18} />
         </button>
       </div>
+      <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+        <label htmlFor="waitlist-website">Svetainė</label>
+        <input
+          id="waitlist-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+        />
+      </div>
+      {status === 'failed' ? (
+        <p role="alert" className="mt-2 px-1 text-sm text-accent">
+          Nepavyko išsiųsti. Pabandyk dar kartą vėliau.
+        </p>
+      ) : null}
       {status === 'error' ? (
         <p id="waitlist-error" role="alert" className="mt-2 px-1 text-sm text-accent">
           Įvesk teisingą el. pašto adresą.

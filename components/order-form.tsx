@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { siteConfig } from '@/lib/site';
+import { mailtoHref, sourceArticlePath, submitInquiry } from '@/lib/inquiry-client';
 import { IconArrowRight, IconCheck } from './icons';
 
-type Status = 'idle' | 'error' | 'success';
+/** `mailto` = prefilled email opened (no server delivery); `sent` = delivered. */
+type Status = 'idle' | 'error' | 'sending' | 'sent' | 'mailto' | 'failed';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MESSAGE_MIN = 5;
@@ -21,8 +23,8 @@ function buildMailto(fields: {
   email: string;
   phone: string;
   message: string;
+  source: string;
 }): string {
-  const subject = `Video užsakymas — ${fields.name}`;
   const bodyLines = [
     `Vardas: ${fields.name}`,
     `El. paštas: ${fields.email}`,
@@ -30,23 +32,16 @@ function buildMailto(fields: {
     '',
     'Ką noriu reklamuoti:',
     fields.message,
+    fields.source ? `\n(Atėjau iš: ${fields.source})` : null,
   ].filter((line): line is string => line !== null);
-
-  const params = new URLSearchParams({
-    subject,
-    body: bodyLines.join('\n'),
-  });
-  // URLSearchParams encodes spaces as "+"; mail clients expect %20 in the body.
-  return `mailto:${siteConfig.contactEmail}?${params.toString().replace(/\+/g, '%20')}`;
+  return mailtoHref(`Video užsakymas — ${fields.name}`, bodyLines);
 }
 
 /**
- * Order/contact form for the reklaminis-video offer. Submits by opening a
- * prefilled email to siteConfig.contactEmail — works with no backend. The
- * address is also shown as a plain fallback for webmail users.
- *
- * TODO: for guaranteed delivery, POST to an API route wired to Resend/Formspree
- * instead of relying on the visitor's mail client.
+ * Order/contact form for the reklaminis-video offer. Posts to /api/uzklausa;
+ * when server delivery is not configured (or fails) it opens a prefilled
+ * email to siteConfig.contactEmail instead. The article the visitor came from
+ * is attached in both cases.
  */
 export function OrderForm() {
   const [name, setName] = useState('');
@@ -55,6 +50,7 @@ export function OrderForm() {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const [website, setWebsite] = useState(''); // honeypot
 
   function validate(): FieldErrors {
     const next: FieldErrors = {};
@@ -65,8 +61,9 @@ export function OrderForm() {
     return next;
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === 'sending') return;
     const found = validate();
     setErrors(found);
     if (Object.keys(found).length > 0) {
@@ -74,17 +71,43 @@ export function OrderForm() {
       return;
     }
 
-    const href = buildMailto({
+    const fields = {
       name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
       message: message.trim(),
-    });
-    window.location.href = href;
-    setStatus('success');
+      source: sourceArticlePath(),
+    };
+    setStatus('sending');
+    const result = await submitInquiry({ kind: 'order', ...fields, website });
+    if (result === 'sent') {
+      setStatus('sent');
+    } else if (result === 'fallback') {
+      window.location.href = buildMailto(fields);
+      setStatus('mailto');
+    } else {
+      setStatus('failed');
+    }
   }
 
-  if (status === 'success') {
+  if (status === 'sent') {
+    return (
+      <div
+        role="status"
+        className="rounded-2xl border border-accent/40 bg-accent/10 p-6 text-sm text-ink"
+      >
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-accent text-accent-fg">
+          <IconCheck size={18} />
+        </span>
+        <p className="mt-4 font-medium">Ačiū! Užklausą gavome.</p>
+        <p className="mt-2 text-muted">
+          Netrukus atsakysime el. paštu {email.trim()}.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'mailto') {
     return (
       <div
         role="status"
@@ -211,9 +234,29 @@ export function OrderForm() {
         ) : null}
       </div>
 
+      <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+        <label htmlFor="order-website">Svetainė</label>
+        <input
+          id="order-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+        />
+      </div>
+
+      {status === 'failed' ? (
+        <p role="alert" className="px-1 text-sm text-accent">
+          Nepavyko išsiųsti. Patikrink laukus arba parašyk tiesiogiai{' '}
+          {siteConfig.contactEmail}.
+        </p>
+      ) : null}
+
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className="btn-accent">
-          Siųsti užklausą
+        <button type="submit" className="btn-accent" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Siunčiama…' : 'Siųsti užklausą'}
           <IconArrowRight size={18} />
         </button>
         <p className="text-sm text-muted">

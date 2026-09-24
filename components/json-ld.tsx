@@ -1,12 +1,13 @@
 /**
- * Renders a JSON-LD structured-data script. The payload is fully controlled by
- * us (no user input), so serializing it inline is safe.
+ * Renders a JSON-LD structured-data script. `<` is escaped so text coming from
+ * article frontmatter can never close the script tag early.
  */
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
+  const json = JSON.stringify(data).replace(/</g, '\\u003c');
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
 }

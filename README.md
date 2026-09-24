@@ -54,6 +54,7 @@ Open <http://localhost:3000>.
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint (`next/core-web-vitals`) |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run check:content` | Content checks: safe MDX only, internal links and images resolve, title/excerpt length and typography warnings (`--strict` turns warnings into errors) |
 | `npm run test:e2e` | Playwright smoke tests (builds + serves automatically) |
 | `npm run test:e2e:install` | Install the Playwright Chromium browser (run once) |
 
@@ -101,6 +102,33 @@ draft: false                     # true hides the post from the production build
 Tavo turinys čia…
 ```
 
+   Optional fields (all backward-compatible; omit them and the post renders as before):
+
+```yaml
+updated: 2026-06-20          # last substantive update → "Atnaujinta", dateModified, sitemap lastmod
+seoTitle: "Trumpesnė antraštė" # <title> override, max 60 chars (use when `title` is long)
+type: guide                  # guide | news | comparison | roundup ("news" → NewsArticle schema)
+author: mykolas-gustas       # key in lib/authors.ts → byline + Person in JSON-LD
+cluster: ai-video            # topic cluster key (hub pages, later)
+sources:                     # → visible "Šaltiniai" list + JSON-LD citation
+  - title: "Šaltinio pavadinimas"
+    url: https://example.com/straipsnis
+    publisher: Leidėjas
+    date: 2026-06-15
+faq:                         # → visible "Dažniausi klausimai" + FAQPage JSON-LD
+  - q: "Klausimas?"
+    a: "Atsakymas."
+entities:                    # → JSON-LD mentions (sameAs only where accurate)
+  - name: Anthropic
+    sameAs: [https://en.wikipedia.org/wiki/Anthropic]
+aiAssisted: true             # → AI-assistance disclosure line (requires `author`)
+changeNote: "Kas pasikeitė"  # → visible change note (requires `updated`)
+```
+
+   The file name must be `<slug>.mdx` (the admin panel and the content pipeline
+   address posts by file name). Editing a post in `/admin` keeps any of these
+   extra fields intact.
+
 3. Write the body in Markdown/MDX. Supported out of the box:
 
    - **Headings, lists, links, bold/italic, tables** (GitHub-flavored Markdown).
@@ -136,9 +164,10 @@ missing field (or a duplicate slug) **fails the build loudly** with a clear
 message naming the file and field. Drafts (`draft: true`) are excluded from
 production builds but visible in `npm run dev`.
 
-**Replace the samples:** `ai-klientu-aptarnavimas.mdx` and
-`ai-produktu-aprasymai.mdx` are clearly marked sample articles (note the
-`<Callout type="sample">` at the top). Delete or replace them with real content.
+**No sample content:** the original placeholder articles were removed. Every
+article must be real content; illustrative scenarios must read clearly as
+examples ("Pavyzdžiui, įsivaizduokime…"), and numbers need a source or a clear
+"orientacinis" label.
 
 ---
 
@@ -197,10 +226,24 @@ a true-to-site live preview (reuses the real MDX + shiki pipeline). `/admin` and
 - Per-page `<title>` + meta description (article values come from frontmatter).
 - Open Graph + Twitter cards. Dynamic OG images are generated per article and a
   branded default via `next/og`.
-- `sitemap.xml` and `robots.txt` are generated automatically.
-- Article pages emit `BlogPosting` JSON-LD structured data.
-- Set `NEXT_PUBLIC_SITE_URL` in production so canonical/OG/sitemap URLs are
-  absolute and correct (see Deployment).
+- `sitemap.xml` (with `lastmod`), `robots.txt` (explicit groups for search and
+  AI crawlers; training-bot policy in `lib/site.ts`), `/straipsniai/rss.xml` and
+  `/llms.txt` are generated automatically.
+- JSON-LD: `Organization` + `WebSite` on the home page; `BlogPosting` (or
+  `NewsArticle`), `BreadcrumbList` and, with a visible FAQ, `FAQPage` on
+  articles. Builders live in `lib/structured-data.ts`.
+- Article `<title>` drops the ` · verslas.ai` suffix when it would exceed 60
+  characters; set `seoTitle` for long titles.
+- Canonical origin is `https://www.verslas.ai` (the apex redirects there); see
+  `resolveSiteUrl` in `lib/site.ts`.
+- IndexNow: the key file lives in `public/<key>.txt`;
+  `.github/workflows/indexnow.yml` pings changed article URLs after each
+  successful Vercel production deployment.
+
+## CI
+
+`.github/workflows/ci.yml` runs typecheck, lint, content checks, the build and
+the Playwright suite on every PR and on pushes to `main`.
 
 ---
 
@@ -231,7 +274,8 @@ on a local production build.
 2. Import the project at <https://vercel.com/new> — the Next.js preset is detected
    automatically; no build configuration needed.
 3. Add an environment variable:
-   - `NEXT_PUBLIC_SITE_URL` = your production origin, e.g. `https://verslas.ai`
+   - `NEXT_PUBLIC_SITE_URL` is optional: the code defaults to `https://www.verslas.ai`
+     (the served origin; the apex redirects to it) and trims stray whitespace.
 4. Deploy. Articles are statically generated at build time, so adding/editing an
    `.mdx` file and pushing triggers a rebuild with the new content.
 

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const ARTICLE_SLUG = 'ai-klientu-aptarnavimas';
+const ARTICLE_SLUG = 'ai-video-turai-brokeriams';
 
 test.describe('pages load and render their key heading', () => {
   test('home', async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe('pages load and render their key heading', () => {
     const response = await page.goto(`/straipsniai/${ARTICLE_SLUG}`);
     expect(response?.status()).toBe(200);
     await expect(
-      page.getByRole('heading', { level: 1, name: /Kaip maža kavinė/i }),
+      page.getByRole('heading', { level: 1, name: /AI video turai brokeriams/i }),
     ).toBeVisible();
     // MDX rendered: a code block is present.
     await expect(page.locator('pre').first()).toBeVisible();
@@ -45,6 +45,26 @@ test.describe('pages load and render their key heading', () => {
     ).toBeVisible();
   });
 
+  test('editorial policy', async ({ page }) => {
+    const response = await page.goto('/kaip-rengiame-straipsnius');
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'Kaip rengiame straipsnius' }),
+    ).toBeVisible();
+  });
+
+  test('privacy policy', async ({ page }) => {
+    const response = await page.goto('/privatumo-politika');
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'Privatumo politika' }),
+    ).toBeVisible();
+    // Linked from every page footer.
+    await expect(
+      page.getByRole('contentinfo').getByRole('link', { name: 'Privatumo politika' }),
+    ).toBeVisible();
+  });
+
   test('404 returns 404 status and on-brand Lithuanian page', async ({ page }) => {
     const response = await page.goto('/sis-puslapis-neegzistuoja');
     expect(response?.status()).toBe(404);
@@ -61,17 +81,21 @@ test.describe('search', () => {
     await page.goto('/straipsniai');
     const search = page.getByPlaceholder('Ieškoti straipsnių…');
 
-    // Both sample articles are present initially.
-    await expect(page.getByRole('heading', { name: /Kaip maža kavinė/i })).toBeVisible();
+    // Both articles are present initially.
     await expect(
-      page.getByRole('heading', { name: /Produktų aprašymai su AI/i }),
+      page.getByRole('heading', { name: /AI video turai brokeriams/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /Kiek kainuoja reklaminis video/i }),
     ).toBeVisible();
 
     // A known word narrows the list to the matching article.
-    await search.fill('kavinė');
-    await expect(page.getByRole('heading', { name: /Kaip maža kavinė/i })).toBeVisible();
+    await search.fill('brokeri');
     await expect(
-      page.getByRole('heading', { name: /Produktų aprašymai su AI/i }),
+      page.getByRole('heading', { name: /AI video turai brokeriams/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /Kiek kainuoja reklaminis video/i }),
     ).toHaveCount(0);
 
     // Gibberish shows the exact Lithuanian empty-state message.
@@ -102,7 +126,7 @@ test.describe('navigation', () => {
 });
 
 test.describe('waitlist', () => {
-  test('accepts input and the submit handler fires without throwing', async ({
+  test('falls back to a prefilled email when delivery is not configured', async ({
     page,
   }) => {
     const pageErrors: Error[] = [];
@@ -113,10 +137,37 @@ test.describe('waitlist', () => {
     await page.getByPlaceholder('vardas@imone.lt').fill('jonas@imone.lt');
     await page.getByRole('button', { name: 'Užsiprenumeruoti' }).click();
 
-    await expect(
-      page.getByText('Ačiū! Pranešime tau, kai tik startuosim.'),
-    ).toBeVisible();
+    // CI has no TELEGRAM_* env, so the API answers 503 and the form must not
+    // claim the visitor is on the list.
+    await expect(page.getByText(/Išsiųsk paruoštą laišką/)).toBeVisible();
+    await expect(page.getByText('Ačiū! Pranešime tau')).toHaveCount(0);
     expect(pageErrors).toHaveLength(0);
+  });
+});
+
+test.describe('inquiry API', () => {
+  test('rejects invalid input and reports missing delivery config', async ({ request }) => {
+    const invalid = await request.post('/api/uzklausa', { data: { kind: 'order', email: 'ne-el-pastas' } });
+    expect(invalid.status()).toBe(400);
+
+    const valid = await request.post('/api/uzklausa', {
+      data: { kind: 'order', name: 'Jonas', email: 'jonas@imone.lt', message: 'Testas' },
+    });
+    expect(valid.status()).toBe(503);
+    expect(await valid.json()).toEqual({ fallback: 'mailto' });
+
+    const honeypot = await request.post('/api/uzklausa', {
+      data: { kind: 'order', email: 'bot@example.com', website: 'spam' },
+    });
+    expect(honeypot.status()).toBe(200);
+  });
+
+  test('rejects cross-origin posts', async ({ request }) => {
+    const response = await request.post('/api/uzklausa', {
+      data: { kind: 'order', email: 'jonas@imone.lt' },
+      headers: { Origin: 'https://evil.example' },
+    });
+    expect(response.status()).toBe(403);
   });
 });
 
@@ -141,5 +192,32 @@ test.describe('mobile', () => {
     await expect(
       page.locator('#mobile-nav').getByRole('link', { name: 'Straipsniai' }),
     ).toBeVisible();
+  });
+});
+
+test.describe('order form', () => {
+  test('attributes the inquiry to the article the visitor came from', async ({ page }) => {
+    let payload: Record<string, string> | null = null;
+    await page.route('**/api/uzklausa', async (route) => {
+      payload = route.request().postDataJSON() as Record<string, string>;
+      await route.fulfill({ status: 200, json: { ok: true } });
+    });
+
+    await page.goto('/straipsniai/reklaminis-video-kaina');
+    await page.locator('a[href="/reklaminis-video?straipsnis=reklaminis-video-kaina"]').click();
+    await expect(page).toHaveURL(/\/reklaminis-video\?straipsnis=reklaminis-video-kaina$/);
+
+    await page.locator('#order-name').fill('Jonas');
+    await page.locator('#order-email').fill('jonas@imone.lt');
+    await page.locator('#order-message').fill('Pavasario akcija kavinei.');
+    await page.getByRole('button', { name: 'Siųsti užklausą' }).click();
+
+    await expect(page.getByText('Ačiū! Užklausą gavome.')).toBeVisible();
+    expect(payload).toMatchObject({
+      kind: 'order',
+      email: 'jonas@imone.lt',
+      source: '/straipsniai/reklaminis-video-kaina',
+      website: '',
+    });
   });
 });

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PageHeader } from '@/components/page-header';
 import { Reveal } from '@/components/reveal';
 import { IconArrowRight, IconCheck } from '@/components/icons';
+import { siteConfig } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Apie',
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const principles = [
-  'Konkretūs pavyzdžiai, o ne teorija — kiekvienas straipsnis turi realų scenarijų.',
+  'Konkretūs pavyzdžiai, o ne teorija — kiekvienas straipsnis remiasi konkrečiu verslo scenarijumi.',
   'Paruošti promptai, kuriuos gali nukopijuoti ir pritaikyti šiandien.',
   'Jokio rinkodarinio triukšmo apie „revoliuciją“ — tik tai, kas veikia versle.',
 ];
@@ -39,9 +40,20 @@ export default function ApiePage() {
               ar techninės dokumentacijos.
             </p>
             <p>
-              Mes paimame realią verslo situaciją — klientų aptarnavimą, turinio
+              Mes paimame tipinę verslo situaciją — klientų aptarnavimą, turinio
               kūrimą, pasikartojančius procesus — ir parodome, kaip ją išspręsti
               su AI žingsnis po žingsnio. Tokia forma, kad galėtum pakartoti pats.
+            </p>
+
+            <h2 id="autorius">Kas rengia šį tinklaraštį</h2>
+            <p>
+              „verslas.ai“ leidžia {siteConfig.publisher.legalName}. Straipsnius
+              rengia ir už jų turinį atsako {siteConfig.publisher.editor}.
+              Kaip naudojame šaltinius ir dirbtinį intelektą, aprašėme puslapyje{' '}
+              <Link href="/kaip-rengiame-straipsnius">
+                „Kaip rengiame straipsnius“
+              </Link>
+              .
             </p>
 
             <h2>Ko čia nerasi</h2>

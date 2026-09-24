@@ -12,7 +12,7 @@ export function PostList({ initialPosts }: { initialPosts: AdminPostSummary[] })
   async function onDelete(slug: string) {
     if (
       !window.confirm(
-        `Ištrinti straipsnį „${slug}"? Šio veiksmo atšaukti negalėsi.`,
+        `Ištrinti straipsnį „${slug}“? Šio veiksmo atšaukti negalėsi.`,
       )
     ) {
       return;
