@@ -164,9 +164,10 @@ missing field (or a duplicate slug) **fails the build loudly** with a clear
 message naming the file and field. Drafts (`draft: true`) are excluded from
 production builds but visible in `npm run dev`.
 
-**Replace the samples:** `ai-klientu-aptarnavimas.mdx` and
-`ai-produktu-aprasymai.mdx` are clearly marked sample articles (note the
-`<Callout type="sample">` at the top). Delete or replace them with real content.
+**No sample content:** the original placeholder articles were removed. Every
+article must be real content; illustrative scenarios must read clearly as
+examples ("Pavyzdžiui, įsivaizduokime…"), and numbers need a source or a clear
+"orientacinis" label.
 
 ---
 
@@ -233,6 +234,8 @@ a true-to-site live preview (reuses the real MDX + shiki pipeline). `/admin` and
   articles. Builders live in `lib/structured-data.ts`.
 - Article `<title>` drops the ` · verslas.ai` suffix when it would exceed 60
   characters; set `seoTitle` for long titles.
+- Canonical origin is `https://www.verslas.ai` (the apex redirects there); see
+  `resolveSiteUrl` in `lib/site.ts`.
 - IndexNow: the key file lives in `public/<key>.txt`;
   `.github/workflows/indexnow.yml` pings changed article URLs after each
   successful Vercel production deployment.
@@ -241,8 +244,6 @@ a true-to-site live preview (reuses the real MDX + shiki pipeline). `/admin` and
 
 `.github/workflows/ci.yml` runs typecheck, lint, content checks, the build and
 the Playwright suite on every PR and on pushes to `main`.
-- Set `NEXT_PUBLIC_SITE_URL` in production so canonical/OG/sitemap URLs are
-  absolute and correct (see Deployment).
 
 ---
 
@@ -273,7 +274,8 @@ on a local production build.
 2. Import the project at <https://vercel.com/new> — the Next.js preset is detected
    automatically; no build configuration needed.
 3. Add an environment variable:
-   - `NEXT_PUBLIC_SITE_URL` = your production origin, e.g. `https://verslas.ai`
+   - `NEXT_PUBLIC_SITE_URL` is optional: the code defaults to `https://www.verslas.ai`
+     (the served origin; the apex redirects to it) and trims stray whitespace.
 4. Deploy. Articles are statically generated at build time, so adding/editing an
    `.mdx` file and pushing triggers a rebuild with the new content.
 

@@ -1,7 +1,6 @@
 /**
  * Central site configuration. All user-facing copy here is Lithuanian.
- * The base URL is overridable per-environment via NEXT_PUBLIC_SITE_URL
- * (set this on Vercel for correct canonical / OG / sitemap URLs).
+ * The base URL defaults to the canonical origin (see resolveSiteUrl).
  */
 
 export interface NavItem {
@@ -9,11 +8,28 @@ export interface NavItem {
   label: string;
 }
 
-const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://verslas.ai';
+/**
+ * The origin Vercel actually serves. The apex `verslas.ai` 308-redirects here,
+ * so canonical URLs, the sitemap and JSON-LD must use www.
+ */
+const CANONICAL_ORIGIN = 'https://www.verslas.ai';
+
+/**
+ * NEXT_PUBLIC_SITE_URL may override the origin (local dev, other hosts). It is
+ * trimmed (a stray tab once leaked into production URLs) and the redirecting
+ * apex is mapped to the canonical origin.
+ */
+function resolveSiteUrl(value: string | undefined): string {
+  const trimmed = value?.trim();
+  if (!trimmed) return CANONICAL_ORIGIN;
+  const url = new URL(trimmed);
+  if (url.hostname === 'verslas.ai') return CANONICAL_ORIGIN;
+  return url.origin;
+}
 
 export const siteConfig = {
   name: 'verslas.ai',
-  url: rawUrl.replace(/\/$/, ''),
+  url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   /** One-line brand promise used on the home hero. */
   tagline: 'Dirbtinis intelektas tavo verslui — be teorijos, su pavyzdžiais.',
   /** Default meta description (Lithuanian). */
@@ -26,7 +42,7 @@ export const siteConfig = {
    * NEXT_PUBLIC_CONTACT_EMAIL; the branded fallback can be set up as a
    * forwarding address on the domain.
    */
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'labas@verslas.ai',
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || 'labas@verslas.ai',
   nav: [
     { href: '/', label: 'Pradžia' },
     { href: '/reklaminis-video', label: 'Video' },

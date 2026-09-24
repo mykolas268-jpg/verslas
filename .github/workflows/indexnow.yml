@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      SITE: https://verslas.ai
+      SITE: https://www.verslas.ai
       SHA: ${{ github.event.deployment.sha }}
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
           key="${key_file%.txt}"
           # Make sure the key file is live before pinging.
           curl -fsS --retry 5 --retry-delay 10 "$SITE/$key_file" | grep -qx "$key"
-          payload=$(jq -n --arg host "verslas.ai" --arg key "$key" \
+          payload=$(jq -n --arg host "www.verslas.ai" --arg key "$key" \
             --arg loc "$SITE/$key_file" --rawfile urls urls.txt \
             '{host: $host, key: $key, keyLocation: $loc, urlList: ($urls | split("\n") | map(select(length > 0)))}')
           status=$(curl -sS -o response.txt -w '%{http_code}' -X POST \

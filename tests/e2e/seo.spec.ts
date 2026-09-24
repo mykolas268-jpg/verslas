@@ -21,7 +21,7 @@ test.describe('technical SEO', () => {
       expect(body).toContain(`User-Agent: ${bot}`);
     }
     expect(body).toContain('Disallow: /admin');
-    expect(body).toContain('Sitemap: https://verslas.ai/sitemap.xml');
+    expect(body).toContain('Sitemap: https://www.verslas.ai/sitemap.xml');
   });
 
   test('sitemap lists every article with lastmod', async ({ request }) => {
@@ -66,7 +66,7 @@ test.describe('technical SEO', () => {
     expect(article?.inLanguage).toBe('lt-LT');
     expect(article?.dateModified).toBeTruthy();
     const publisher = article?.publisher as { logo?: { url?: string } };
-    expect(publisher.logo?.url).toBe('https://verslas.ai/logo.png');
+    expect(publisher.logo?.url).toBe('https://www.verslas.ai/logo.png');
 
     const breadcrumbs = graph.find((node) => node['@type'] === 'BreadcrumbList') as
       | { itemListElement: unknown[] }
