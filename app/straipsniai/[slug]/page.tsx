@@ -2,13 +2,22 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getAdjacentPosts, getAllSlugs, getPostBySlug } from '@/lib/posts';
+import {
+  getAdjacentPosts,
+  getAllSlugs,
+  getPostBySlug,
+  lastModified,
+} from '@/lib/posts';
+import { getAuthor } from '@/lib/authors';
 import { siteConfig } from '@/lib/site';
+import { articleTitle } from '@/lib/seo';
+import { articleJsonLd } from '@/lib/structured-data';
 import { formatDateLt } from '@/lib/format';
 import { MdxContent } from '@/components/mdx-content';
 import { CTA } from '@/components/cta';
 import { Tag } from '@/components/tag';
 import { JsonLd } from '@/components/json-ld';
+import { ArticleFaq, ArticleSources } from '@/components/article-extras';
 import { IconArrowLeft, IconArrowRight, IconClock } from '@/components/icons';
 
 export function generateStaticParams() {
@@ -28,10 +37,12 @@ export async function generateMetadata({
   }
 
   const canonical = `/straipsniai/${post.slug}`;
+  const author = getAuthor(post.author);
   return {
-    title: post.title,
+    title: articleTitle(post),
     description: post.excerpt,
     keywords: post.tags,
+    ...(author ? { authors: [{ name: author.name }] } : {}),
     alternates: { canonical },
     openGraph: {
       type: 'article',
@@ -39,6 +50,7 @@ export async function generateMetadata({
       title: post.title,
       description: post.excerpt,
       publishedTime: post.date,
+      modifiedTime: lastModified(post),
       tags: post.tags,
     },
     twitter: {
@@ -63,33 +75,8 @@ export default async function ArticlePage({
 
   const { prev, next } = getAdjacentPosts(slug);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    dateModified: post.date,
-    inLanguage: 'lt',
-    keywords: post.tags.join(', '),
-    image: post.cover
-      ? `${siteConfig.url}${post.cover}`
-      : `${siteConfig.url}/opengraph-image`,
-    author: {
-      '@type': 'Organization',
-      name: siteConfig.author.name,
-      url: siteConfig.url,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${siteConfig.url}/straipsniai/${post.slug}`,
-    },
-  };
+  const author = getAuthor(post.author);
+  const jsonLd = articleJsonLd(post, author);
 
   return (
     <article className="mx-auto max-w-content px-5 py-10 sm:px-8 sm:py-14">
@@ -116,13 +103,42 @@ export default async function ArticlePage({
             {post.title}
           </h1>
           <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+            {author ? (
+              <>
+                <span className="font-medium text-ink">{author.name}</span>
+                <span aria-hidden="true">·</span>
+              </>
+            ) : null}
             <time dateTime={post.date}>{formatDateLt(post.date)}</time>
+            {post.updated && post.updated !== post.date ? (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  Atnaujinta{' '}
+                  <time dateTime={post.updated}>{formatDateLt(post.updated)}</time>
+                </span>
+              </>
+            ) : null}
             <span aria-hidden="true">·</span>
             <span className="inline-flex items-center gap-1">
               <IconClock size={14} />
               {post.readingLabel}
             </span>
           </div>
+          {post.aiAssisted && author ? (
+            <p className="mt-3 text-sm text-muted">
+              Parengta naudojant dirbtinį intelektą. Faktus patikrino ir
+              redagavo {author.name}.
+            </p>
+          ) : null}
+          {post.changeNote && post.updated ? (
+            <p className="mt-4 rounded-2xl border border-line bg-surface px-4 py-3 text-sm text-ink">
+              <span className="font-semibold">
+                Kas pasikeitė ({formatDateLt(post.updated)}):
+              </span>{' '}
+              {post.changeNote}
+            </p>
+          ) : null}
         </header>
       </div>
 
@@ -144,6 +160,8 @@ export default async function ArticlePage({
       <div className="mx-auto mt-10 max-w-prose">
         <div className="prose max-w-none prose-headings:font-serif prose-headings:tracking-tight prose-pre:m-0 prose-pre:bg-transparent prose-pre:p-0">
           <MdxContent source={post.content} />
+          <ArticleFaq items={post.faq} />
+          <ArticleSources sources={post.sources} />
         </div>
       </div>
 

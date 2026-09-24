@@ -8,6 +8,8 @@ import { CTA } from '@/components/cta';
 import { Reveal } from '@/components/reveal';
 import { Tag } from '@/components/tag';
 import { IconArrowRight, IconClock, IconSpark } from '@/components/icons';
+import { JsonLd } from '@/components/json-ld';
+import { siteJsonLd } from '@/lib/structured-data';
 
 export default function HomePage() {
   const posts = getAllPostsMeta();
@@ -16,6 +18,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-content px-5 sm:px-8">
+      <JsonLd data={siteJsonLd()} />
       {/* Hero */}
       <section className="relative py-20 sm:py-28">
         <div

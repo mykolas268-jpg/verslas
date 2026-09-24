@@ -9,7 +9,8 @@ export const offer = {
   price: 99,
   currency: '€',
   lengthLabel: '20–30 sek.',
-  deliveryLabel: '4 darbo dienos',
+  /** Accusative case: always used after „per“ („per 4 darbo dienas“). */
+  deliveryLabel: '4 darbo dienas',
   revisions: 1,
 } as const;
 
@@ -44,7 +45,7 @@ export const offerSteps: OfferStep[] = [
   {
     title: 'Kelia į reklamą',
     description:
-      'Gauni paruoštą failą tinkamu formatu „Instagram", „TikTok" ar „Facebook" reklamai. Visos teisės — tavo.',
+      'Gauni paruoštą failą tinkamu formatu „Instagram“, „TikTok“ ar „Facebook“ reklamai. Visos teisės — tavo.',
   },
 ];
 

@@ -46,7 +46,26 @@ export type PostInput = z.infer<typeof PostInputSchema>;
 
 const COMMITTER = 'verslas.ai admin';
 
-function buildMdx(input: PostInput, slug: string): string {
+/** Frontmatter keys the editor form owns; everything else is preserved. */
+const EDITOR_KEYS = new Set(['title', 'slug', 'date', 'excerpt', 'tags', 'cover', 'draft']);
+
+/**
+ * Frontmatter fields the editor does not manage (sources, updated, faq, …),
+ * kept verbatim so an edit in /admin never silently drops them.
+ */
+function extraFrontmatter(existingContent: string | undefined): Record<string, unknown> {
+  if (!existingContent) return {};
+  const { data } = parseFrontmatter(existingContent);
+  return Object.fromEntries(
+    Object.entries(data).filter(([key]) => !EDITOR_KEYS.has(key)),
+  );
+}
+
+function buildMdx(
+  input: PostInput,
+  slug: string,
+  extra: Record<string, unknown> = {},
+): string {
   const frontmatter: Record<string, unknown> = {
     title: input.title.trim(),
     slug,
@@ -58,6 +77,7 @@ function buildMdx(input: PostInput, slug: string): string {
     frontmatter.cover = input.cover.trim();
   }
   frontmatter.draft = input.draft;
+  Object.assign(frontmatter, extra);
 
   const yaml = dump(frontmatter, { lineWidth: -1, noRefs: true });
   return `---\n${yaml}---\n\n${input.body.trim()}\n`;
@@ -139,8 +159,12 @@ export async function savePost(
     throw new Error('Nepavyko sugeneruoti nuorodos (slug) iš antraštės.');
   }
 
+  const existing = await storage.read(slug);
+  const extra = mode === 'update' ? extraFrontmatter(existing?.content) : {};
+
   // Final guard: the assembled frontmatter must satisfy the build-time schema.
   const frontmatterCheck = FrontmatterSchema.safeParse({
+    ...extra,
     title: input.title,
     slug,
     date: input.date,
@@ -168,15 +192,14 @@ export async function savePost(
   }
 
   if (mode === 'create') {
-    const existing = await storage.read(slug);
     if (existing) {
-      throw new Error(`Straipsnis su nuoroda „${slug}" jau egzistuoja.`);
+      throw new Error(`Straipsnis su nuoroda „${slug}“ jau egzistuoja.`);
     }
   }
 
   const verb = input.draft ? 'save draft' : 'publish';
   const message = `content(${COMMITTER}): ${verb} ${slug}`;
-  await storage.write(slug, buildMdx({ ...input, slug }, slug), message);
+  await storage.write(slug, buildMdx({ ...input, slug }, slug, extra), message);
 
   return { slug, storage: storage.kind };
 }

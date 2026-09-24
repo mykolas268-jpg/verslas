@@ -26,8 +26,8 @@ export default async function AdminDashboardPage() {
             <h1 className="font-serif text-3xl">Straipsniai</h1>
             <p className="mt-1 max-w-xl text-sm text-muted">
               {storageKind === 'github'
-                ? 'Publikuojant pakeitimai įrašomi į „GitHub" ir svetainė automatiškai sukuriama iš naujo.'
-                : 'Vietinis režimas: pakeitimai įrašomi į failus (vėliau nusiųsk juos į „GitHub").'}
+                ? 'Publikuojant pakeitimai įrašomi į „GitHub“ ir svetainė automatiškai sukuriama iš naujo.'
+                : 'Vietinis režimas: pakeitimai įrašomi į failus (vėliau nusiųsk juos į „GitHub“).'}
             </p>
           </div>
           <Link href="/admin/new" className="btn-accent">

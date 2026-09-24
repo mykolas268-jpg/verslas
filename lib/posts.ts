@@ -7,27 +7,85 @@ import { readingLabelLt } from './format';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'straipsniai');
 
+const IsoDateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be in YYYY-MM-DD format');
+
+export const ArticleTypeSchema = z.enum(['guide', 'news', 'comparison', 'roundup']);
+export type ArticleType = z.infer<typeof ArticleTypeSchema>;
+
+const SourceSchema = z.object({
+  title: z.string().min(1, 'source title is required'),
+  url: z.string().url('source url must be an absolute URL'),
+  publisher: z.string().min(1).optional(),
+  date: IsoDateSchema.optional(),
+});
+export type ArticleSource = z.infer<typeof SourceSchema>;
+
+const FaqItemSchema = z.object({
+  q: z.string().min(1, 'faq question is required'),
+  a: z.string().min(1, 'faq answer is required'),
+});
+export type FaqItem = z.infer<typeof FaqItemSchema>;
+
+const EntitySchema = z.object({
+  name: z.string().min(1, 'entity name is required'),
+  sameAs: z.array(z.string().url()).default([]),
+});
+export type ArticleEntity = z.infer<typeof EntitySchema>;
+
 /**
  * Frontmatter contract. Invalid frontmatter throws and fails the build loudly,
  * which is the intended behavior (no silently-broken posts in production).
+ *
+ * Everything after `draft` is optional and defaults to the pre-existing
+ * behavior, so older articles build unchanged.
  */
-export const FrontmatterSchema = z.object({
-  title: z.string().min(1, 'title is required'),
-  slug: z
-    .string()
-    .min(1, 'slug is required')
-    .regex(
-      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      'slug must be lowercase ascii kebab-case (e.g. "ai-klientu-aptarnavimas")',
-    ),
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be in YYYY-MM-DD format'),
-  excerpt: z.string().min(1, 'excerpt is required'),
-  tags: z.array(z.string()).default([]),
-  cover: z.string().optional(),
-  draft: z.boolean().default(false),
-});
+export const FrontmatterSchema = z
+  .object({
+    title: z.string().min(1, 'title is required'),
+    slug: z
+      .string()
+      .min(1, 'slug is required')
+      .regex(
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+        'slug must be lowercase ascii kebab-case (e.g. "ai-klientu-aptarnavimas")',
+      ),
+    date: IsoDateSchema,
+    excerpt: z.string().min(1, 'excerpt is required'),
+    tags: z.array(z.string()).default([]),
+    cover: z.string().optional(),
+    draft: z.boolean().default(false),
+    /** Last substantive update (YYYY-MM-DD). Drives dateModified and "Atnaujinta". */
+    updated: IsoDateSchema.optional(),
+    /** Short <title> override when `title` is too long for search results. */
+    seoTitle: z.string().min(1).max(60, 'seoTitle must be 60 characters or fewer').optional(),
+    type: ArticleTypeSchema.default('guide'),
+    /** Key into lib/authors.ts. Omitted → organization byline (legacy behavior). */
+    author: z.string().min(1).optional(),
+    /** Topic cluster key (hub pages, breadcrumbs). */
+    cluster: z.string().min(1).optional(),
+    sources: z.array(SourceSchema).default([]),
+    faq: z.array(FaqItemSchema).default([]),
+    /** Key entities for JSON-LD `mentions` (sameAs only where accurate). */
+    entities: z.array(EntitySchema).default([]),
+    /** Shows the AI-assistance disclosure line under the byline. */
+    aiAssisted: z.boolean().default(false),
+    /** Visible note describing what changed in the last update. */
+    changeNote: z.string().min(1).optional(),
+  })
+  .refine((data) => !data.updated || data.updated >= data.date, {
+    message: 'updated must not be earlier than date',
+    path: ['updated'],
+  })
+  .refine((data) => !data.aiAssisted || Boolean(data.author), {
+    message: 'aiAssisted articles must name the responsible author',
+    path: ['author'],
+  })
+  .refine((data) => !data.changeNote || Boolean(data.updated), {
+    message: 'changeNote requires an updated date',
+    path: ['changeNote'],
+  });
 
 export type Frontmatter = z.infer<typeof FrontmatterSchema>;
 
@@ -35,14 +93,25 @@ export interface PostMeta {
   slug: string;
   title: string;
   date: string;
+  /** Last substantive update, if any. */
+  updated?: string;
   excerpt: string;
   tags: string[];
   cover?: string;
+  type: ArticleType;
   readingMinutes: number;
   readingLabel: string;
 }
 
 export interface Post extends PostMeta {
+  seoTitle?: string;
+  author?: string;
+  cluster?: string;
+  sources: ArticleSource[];
+  faq: FaqItem[];
+  entities: ArticleEntity[];
+  aiAssisted: boolean;
+  changeNote?: string;
   /** Raw MDX body (frontmatter stripped). */
   content: string;
 }
@@ -81,10 +150,20 @@ function parseFile(fileName: string): RawPost {
     slug: frontmatter.slug,
     title: frontmatter.title,
     date: frontmatter.date,
+    updated: frontmatter.updated,
     excerpt: frontmatter.excerpt,
     tags: frontmatter.tags,
     cover: frontmatter.cover,
+    type: frontmatter.type,
     draft: frontmatter.draft,
+    seoTitle: frontmatter.seoTitle,
+    author: frontmatter.author,
+    cluster: frontmatter.cluster,
+    sources: frontmatter.sources,
+    faq: frontmatter.faq,
+    entities: frontmatter.entities,
+    aiAssisted: frontmatter.aiAssisted,
+    changeNote: frontmatter.changeNote,
     readingMinutes: minutes,
     readingLabel: readingLabelLt(minutes),
     content,
@@ -92,17 +171,9 @@ function parseFile(fileName: string): RawPost {
 }
 
 function stripDraft(post: RawPost): Post {
-  return {
-    slug: post.slug,
-    title: post.title,
-    date: post.date,
-    excerpt: post.excerpt,
-    tags: post.tags,
-    cover: post.cover,
-    readingMinutes: post.readingMinutes,
-    readingLabel: post.readingLabel,
-    content: post.content,
-  };
+  const { draft: _draft, ...rest } = post;
+  void _draft;
+  return rest;
 }
 
 function toMeta(post: RawPost): PostMeta {
@@ -110,12 +181,19 @@ function toMeta(post: RawPost): PostMeta {
     slug: post.slug,
     title: post.title,
     date: post.date,
+    updated: post.updated,
     excerpt: post.excerpt,
     tags: post.tags,
     cover: post.cover,
+    type: post.type,
     readingMinutes: post.readingMinutes,
     readingLabel: post.readingLabel,
   };
+}
+
+/** Date of the last substantive change: `updated` when set, else `date`. */
+export function lastModified(post: Pick<PostMeta, 'date' | 'updated'>): string {
+  return post.updated ?? post.date;
 }
 
 /**

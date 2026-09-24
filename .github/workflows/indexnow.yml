@@ -1,0 +1,70 @@
+name: IndexNow
+
+# Pings IndexNow (Bing, Yandex, Seznam, Naver, Yep) with the article URLs that
+# changed in a successful Vercel production deployment. Google does not use
+# IndexNow; it relies on the sitemap.
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      startsWith(github.event.deployment.environment, 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SITE: https://verslas.ai
+      SHA: ${{ github.event.deployment.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
+          fetch-depth: 2
+
+      - name: Collect changed article URLs
+        id: urls
+        run: |
+          set -euo pipefail
+          if ! git rev-parse --verify --quiet "${SHA}^1" >/dev/null; then
+            echo "No parent commit; nothing to compare." && echo "count=0" >> "$GITHUB_OUTPUT" && exit 0
+          fi
+          : > urls.txt
+          # Added/modified articles: read the slug from frontmatter.
+          git diff --name-only --diff-filter=AM "${SHA}^1" "$SHA" -- 'content/straipsniai/*.mdx' |
+            while read -r file; do
+              slug=$(sed -n 's/^slug:[[:space:]]*["'"'"']\{0,1\}\([a-z0-9-]*\).*/\1/p' "$file" | head -n1)
+              [ -n "$slug" ] && echo "$SITE/straipsniai/$slug" >> urls.txt
+            done
+          # Deleted articles: ping the old URL so engines see the 404 sooner.
+          git diff --name-only --diff-filter=D "${SHA}^1" "$SHA" -- 'content/straipsniai/*.mdx' |
+            while read -r file; do
+              echo "$SITE/straipsniai/$(basename "$file" .mdx)" >> urls.txt
+            done
+          if [ -s urls.txt ]; then
+            echo "$SITE/straipsniai" >> urls.txt
+          fi
+          sort -u urls.txt -o urls.txt
+          cat urls.txt
+          echo "count=$(wc -l < urls.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Ping IndexNow
+        if: steps.urls.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          key_file=$(ls public/*.txt | xargs -n1 basename | grep -E '^[a-f0-9]{32}\.txt$' | head -n1)
+          key="${key_file%.txt}"
+          # Make sure the key file is live before pinging.
+          curl -fsS --retry 5 --retry-delay 10 "$SITE/$key_file" | grep -qx "$key"
+          payload=$(jq -n --arg host "verslas.ai" --arg key "$key" \
+            --arg loc "$SITE/$key_file" --rawfile urls urls.txt \
+            '{host: $host, key: $key, keyLocation: $loc, urlList: ($urls | split("\n") | map(select(length > 0)))}')
+          status=$(curl -sS -o response.txt -w '%{http_code}' -X POST \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data "$payload" https://api.indexnow.org/indexnow)
+          echo "IndexNow HTTP $status"; cat response.txt || true
+          case "$status" in 200|202) ;; *) exit 1 ;; esac
