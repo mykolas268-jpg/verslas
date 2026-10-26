@@ -34,9 +34,9 @@ export const metadata: Metadata = {
 };
 
 const principles = [
-  'Konkretūs pavyzdžiai, o ne teorija — kiekvienas straipsnis turi realų scenarijų.',
+  'Konkretūs pavyzdžiai, o ne teorija - kiekvienas straipsnis turi realų scenarijų.',
   'Paruošti promptai, kuriuos gali nukopijuoti ir pritaikyti šiandien.',
-  'Jokio rinkodarinio triukšmo apie „revoliuciją“ — tik tai, kas veikia versle.',
+  'Jokio rinkodarinio triukšmo apie „revoliuciją” - tik tai, kas veikia versle.',
 ];
 
 export default function ApiePage() {
@@ -46,7 +46,7 @@ export default function ApiePage() {
         <PageHeader
           eyebrow="Apie"
           title="Apie verslas.ai"
-          description="„verslas.ai“ — tinklaraštis apie tai, kaip dirbtinį intelektą realiai pritaikyti versle. Be teorijos, be hype'o, su pavyzdžiais."
+          description=”„verslas.ai” - tinklaraštis apie tai, kaip dirbtinį intelektą realiai pritaikyti versle. Be teorijos, be hype'o, su pavyzdžiais.”
         />
       </Reveal>
 
@@ -61,15 +61,15 @@ export default function ApiePage() {
               ar techninės dokumentacijos.
             </p>
             <p>
-              Mes paimame realią verslo situaciją — klientų aptarnavimą, turinio
-              kūrimą, pasikartojančius procesus — ir parodome, kaip ją išspręsti
+              Mes paimame realią verslo situaciją - klientų aptarnavimą, turinio
+              kūrimą, pasikartojančius procesus - ir parodome, kaip ją išspręsti
               su AI žingsnis po žingsnio. Tokia forma, kad galėtum pakartoti pats.
             </p>
 
             <h2>Ko čia nerasi</h2>
             <p>
               Nerasi pažadų apie stebuklus ar baimės, kad robotai užims visus
-              darbus. AI čia — tai įrankis, nuimantis nuobodžią, pasikartojančią
+              darbus. AI čia - tai įrankis, nuimantis nuobodžią, pasikartojančią
               darbo dalį, kad žmogui liktų tai, kas svarbu.
             </p>
           </div>
