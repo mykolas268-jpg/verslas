@@ -1,0 +1,60 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI logotipo kūrimas nemokamai">
+  <defs>
+    <linearGradient id="bg-logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="glow-logo" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#818cf8" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-logo" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0V40H0" fill="none" stroke="#818cf8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-logo)"/>
+  <rect width="1200" height="750" fill="url(#grid-logo)"/>
+  <rect width="1200" height="750" fill="url(#glow-logo)"/>
+
+  <!-- abstract logo mark -->
+  <g transform="translate(500 200)">
+    <!-- outer hexagon -->
+    <polygon points="100,0 186,50 186,150 100,200 14,150 14,50"
+             fill="none" stroke="#a5b4fc" stroke-opacity="0.35" stroke-width="2"/>
+    <!-- inner shapes -->
+    <polygon points="100,40 152,70 152,130 100,160 48,130 48,70"
+             fill="#6366f1" fill-opacity="0.25" stroke="#a5b4fc" stroke-opacity="0.6" stroke-width="1.5"/>
+    <!-- AI spark in center -->
+    <g transform="translate(80 75)" fill="#c7d2fe" fill-opacity="0.9">
+      <path d="M20 0c2 15 6 19 21 21-15 2-19 6-21 21-2-15-6-19-21-21C14 19 18 15 20 0Z"/>
+    </g>
+    <!-- decorative dots -->
+    <circle cx="100" cy="0" r="4" fill="#818cf8" fill-opacity="0.8"/>
+    <circle cx="186" cy="50" r="4" fill="#818cf8" fill-opacity="0.6"/>
+    <circle cx="186" cy="150" r="4" fill="#818cf8" fill-opacity="0.6"/>
+    <circle cx="100" cy="200" r="4" fill="#818cf8" fill-opacity="0.8"/>
+    <circle cx="14" cy="150" r="4" fill="#818cf8" fill-opacity="0.6"/>
+    <circle cx="14" cy="50" r="4" fill="#818cf8" fill-opacity="0.6"/>
+  </g>
+
+  <!-- cursor arrow -->
+  <g transform="translate(720 340)">
+    <path d="M0 0L0 42L12 33L20 52L28 48L20 29L34 29Z" fill="#e0e7ff" fill-opacity="0.7"/>
+  </g>
+
+  <!-- floating color swatches -->
+  <rect x="260" y="320" width="44" height="44" rx="10" fill="#6366f1" fill-opacity="0.6"/>
+  <rect x="320" y="340" width="44" height="44" rx="10" fill="#818cf8" fill-opacity="0.4"/>
+  <rect x="280" y="380" width="44" height="44" rx="10" fill="#a5b4fc" fill-opacity="0.3"/>
+
+  <!-- text badge -->
+  <rect x="830" y="260" width="200" height="36" rx="18" fill="#6366f1" fill-opacity="0.2" stroke="#a5b4fc" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="930" y="284" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#c7d2fe" letter-spacing="2">PROMPT → LOGO</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#c7d2fe">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#6366f1"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · LOGOTIPAS</text>
+  </g>
+</svg>
