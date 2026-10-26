@@ -5,7 +5,7 @@ import { formatDateLt } from '@/lib/format';
 import { IconArrowRight, IconClock, IconSpark } from './icons';
 import { Tag } from './tag';
 
-/** Deterministic hue (0–359) derived from the slug, for the no-cover fallback. */
+/** Deterministic hue (0-359) derived from the slug, for the no-cover fallback. */
 function hueFromSlug(slug: string): number {
   let hash = 0;
   for (let i = 0; i < slug.length; i += 1) {

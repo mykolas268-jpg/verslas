@@ -25,14 +25,14 @@ import {
 const priceLabel = `${offer.price} ${offer.currency}`;
 
 export const metadata: Metadata = {
-  title: `Reklaminis video verslui – ${priceLabel}, per 4 dienas`,
+  title: `Reklaminis video verslui - ${priceLabel}, per 4 dienas`,
   description:
     'Trumpas reklaminis video tavo verslui už 99 €, paruoštas per 4 darbo dienas. Skirta „Instagram", „TikTok" ir „Facebook" reklamai. Užsisakyk internetu.',
   alternates: { canonical: '/reklaminis-video' },
   openGraph: {
     type: 'website',
     url: `${siteConfig.url}/reklaminis-video`,
-    title: `Reklaminis video verslui – ${priceLabel}`,
+    title: `Reklaminis video verslui - ${priceLabel}`,
     description:
       'Trumpas, reklamai paruoštas klipas per 4 darbo dienas. „Instagram", „TikTok" ir „Facebook" reklamai.',
   },
@@ -44,7 +44,7 @@ const jsonLd = {
   name: 'Reklaminis video verslui',
   serviceType: 'Reklaminio video kūrimas',
   description:
-    'Trumpi reklaminiai video (20–30 sek.) Lietuvos smulkiam ir vidutiniam verslui socialinių tinklų reklamai. Paruošiama per 4 darbo dienas.',
+    'Trumpi reklaminiai video (20-30 sek.) Lietuvos smulkiam ir vidutiniam verslui socialinių tinklų reklamai. Paruošiama per 4 darbo dienas.',
   provider: {
     '@type': 'Organization',
     name: siteConfig.name,

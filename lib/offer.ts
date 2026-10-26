@@ -8,7 +8,7 @@
 export const offer = {
   price: 99,
   currency: '€',
-  lengthLabel: '20–30 sek.',
+  lengthLabel: '20-30 sek.',
   deliveryLabel: '4 darbo dienos',
   revisions: 1,
 } as const;
