@@ -46,7 +46,7 @@ export default function ApiePage() {
         <PageHeader
           eyebrow="Apie"
           title="Apie verslas.ai"
-          description=”„verslas.ai” - tinklaraštis apie tai, kaip dirbtinį intelektą realiai pritaikyti versle. Be teorijos, be hype'o, su pavyzdžiais.”
+          description={`„verslas.ai” - tinklaraštis apie tai, kaip dirbtinį intelektą realiai pritaikyti versle. Be teorijos, be hype'o, su pavyzdžiais.`}
         />
       </Reveal>
 

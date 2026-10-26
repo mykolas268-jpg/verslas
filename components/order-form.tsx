@@ -201,7 +201,7 @@ export function OrderForm() {
           }}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? 'order-message-error' : undefined}
-          placeholder="Pvz.: nauja pavasario akcija kavinei, vertikalus klipas „Instagram“ reklamai."
+          placeholder={`Pvz.: nauja pavasario akcija kavinei, vertikalus klipas „Instagram” reklamai.`}
           className="w-full rounded-2xl border border-line bg-card px-5 py-3 text-sm text-ink transition-colors"
         />
         {errors.message ? (

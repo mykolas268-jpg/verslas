@@ -266,7 +266,7 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
               onChange={(event) => setExcerpt(event.target.value)}
               rows={2}
               className="field !rounded-xl"
-              placeholder="Trumpas aprašymas kortelėms ir „Google“."
+              placeholder={`Trumpas aprašymas kortelėms ir „Google”.`}
             />
             <p className="mt-1.5 px-1 text-xs text-muted">
               Rodomas straipsnio kortelėse ir „Google“ paieškoje (meta aprašymas).{' '}
