@@ -4,7 +4,7 @@ import typography from '@tailwindcss/typography';
 /**
  * Design tokens are defined as RGB channel triplets in globals.css so that
  * Tailwind's `<alpha-value>` opacity modifiers keep working (e.g. bg-accent/10).
- * Components reference semantic names only — never raw hex.
+ * Components reference semantic names only - never raw hex.
  */
 const config: Config = {
   darkMode: 'class',

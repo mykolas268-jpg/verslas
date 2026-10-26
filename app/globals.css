@@ -181,7 +181,7 @@
 /*
  * Article typography (@tailwindcss/typography).
  * We point the plugin's CSS variables at our own design tokens, so prose
- * adapts to light/dark automatically — no `prose-invert` needed.
+ * adapts to light/dark automatically - no `prose-invert` needed.
  */
 .prose {
   --tw-prose-body: rgb(var(--color-text) / 0.92);

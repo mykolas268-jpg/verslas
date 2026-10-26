@@ -22,7 +22,7 @@ function buildMailto(fields: {
   phone: string;
   message: string;
 }): string {
-  const subject = `Video užsakymas — ${fields.name}`;
+  const subject = `Video užsakymas - ${fields.name}`;
   const bodyLines = [
     `Vardas: ${fields.name}`,
     `El. paštas: ${fields.email}`,
@@ -42,7 +42,7 @@ function buildMailto(fields: {
 
 /**
  * Order/contact form for the reklaminis-video offer. Submits by opening a
- * prefilled email to siteConfig.contactEmail — works with no backend. The
+ * prefilled email to siteConfig.contactEmail - works with no backend. The
  * address is also shown as a plain fallback for webmail users.
  *
  * TODO: for guaranteed delivery, POST to an API route wired to Resend/Formspree
@@ -95,7 +95,7 @@ export function OrderForm() {
         </span>
         <p className="mt-4 font-medium">Atsidarys tavo el. pašto programa.</p>
         <p className="mt-2 text-muted">
-          Užpildyta žinutė jau paruošta — tereikia paspausti „Siųsti“. Jei
+          Užpildyta žinutė jau paruošta - tereikia paspausti „Siųsti“. Jei
           programa neatsidarė, parašyk tiesiogiai:{' '}
           <a
             href={`mailto:${siteConfig.contactEmail}`}

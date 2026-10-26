@@ -128,7 +128,7 @@ Tavo turinys čia…
      <ProseImage src="/images/schema.svg" alt="Aprašymas" caption="Paveikslo paantraštė." />
      ```
 
-4. That's it — the post is picked up automatically. Reading time is computed,
+4. That's it - the post is picked up automatically. Reading time is computed,
    the search index updates, and the article appears newest-first.
 
 **Validation:** frontmatter is validated with Zod at build time. A malformed or
@@ -145,21 +145,21 @@ production builds but visible in `npm run dev`.
 ## Admin panel (`/admin`)
 
 A built-in, login-protected editor for writing and publishing posts in the
-browser — no need to touch files by hand.
+browser - no need to touch files by hand.
 
 **How it stores content (dual adapter):**
 
 - **Locally** (or whenever `GITHUB_TOKEN` is unset) it writes the `.mdx` files
-  straight to `content/straipsniai/` — great for authoring with `npm run dev`,
+  straight to `content/straipsniai/` - great for authoring with `npm run dev`,
   then committing/pushing yourself.
 - **In production**, with `GITHUB_TOKEN` + `GITHUB_REPO` set, "Publish" commits
   the post to your GitHub repo via the API, which triggers a Vercel rebuild
-  (~1 min) — so you can edit from anywhere.
+  (~1 min) - so you can edit from anywhere.
 
 **Setup:**
 
-1. Set env vars (see `.env.example`): `ADMIN_PASSWORD`, `SESSION_SECRET`, and —
-   for production publishing — `GITHUB_TOKEN` (fine-grained PAT with *Contents:
+1. Set env vars (see `.env.example`): `ADMIN_PASSWORD`, `SESSION_SECRET`, and -
+   for production publishing - `GITHUB_TOKEN` (fine-grained PAT with *Contents:
    Read & Write* on the repo), `GITHUB_REPO` (`owner/repo`), `GITHUB_BRANCH`.
    Locally, drop these in `.env.local`.
 2. Go to `/admin`, log in with `ADMIN_PASSWORD`.
@@ -228,7 +228,7 @@ on a local production build.
 ## Deployment (Vercel)
 
 1. Push the repo to GitHub/GitLab/Bitbucket.
-2. Import the project at <https://vercel.com/new> — the Next.js preset is detected
+2. Import the project at <https://vercel.com/new> - the Next.js preset is detected
    automatically; no build configuration needed.
 3. Add an environment variable:
    - `NEXT_PUBLIC_SITE_URL` = your production origin, e.g. `https://verslas.ai`
@@ -252,7 +252,7 @@ untrusted HTML rendered).
 `npm audit` reports two **moderate** advisories, both originating from the
 `postcss` copy **bundled inside Next.js** (used only to process our own
 first-party CSS). The only "fix" npm offers is downgrading Next.js to a 9.x
-release, which would reintroduce a patched high-severity CVE — so it is
+release, which would reintroduce a patched high-severity CVE - so it is
 intentionally left as-is until Next ships an update. Our direct dependencies are
 clean, and the unmaintained `gray-matter` (which bundled a vulnerable
 `js-yaml@3`) was replaced with a tiny first-party frontmatter parser over the
@@ -262,14 +262,14 @@ maintained `js-yaml@4`.
 
 ## TODOs left for later
 
-- **Waitlist backend** — `components/waitlist-form.tsx` has a placeholder submit
+- **Waitlist backend** - `components/waitlist-form.tsx` has a placeholder submit
   handler (`// TODO: connect backend`). Wire it to a real provider (an API route +
   Resend / ConvertKit / Mailchimp, etc.). The UI is final.
-- **Real course data** — `lib/courses.ts` holds placeholder "coming soon" courses.
+- **Real course data** - `lib/courses.ts` holds placeholder "coming soon" courses.
   Flip `status` to `available` and add an `href` when a course is ready; the card
   layout already supports it.
-- **Real articles** — replace the two sample `.mdx` files with real content.
-- **Analytics** — add your analytics/consent solution (e.g. Vercel Analytics,
+- **Real articles** - replace the two sample `.mdx` files with real content.
+- **Analytics** - add your analytics/consent solution (e.g. Vercel Analytics,
   Plausible) in `app/layout.tsx`.
-- **Social handle** — update `siteConfig.social.twitter` in `lib/site.ts`.
+- **Social handle** - update `siteConfig.social.twitter` in `lib/site.ts`.
 ```

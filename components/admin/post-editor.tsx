@@ -355,7 +355,7 @@ export function PostEditor({ mode, initial }: PostEditorProps) {
               placeholder={'## Antraštė\n\nTekstas su **paryškinimu**…\n\n<Callout type="tip">\n\nPatarimas.\n\n</Callout>'}
             />
             <p className="mt-1.5 px-1 text-xs text-muted">
-              Paveikslą įterpsi ties žymekliu. Rašyk Markdown / MDX — palaikomi
+              Paveikslą įterpsi ties žymekliu. Rašyk Markdown / MDX - palaikomi
               ## antraštės, sąrašai, **paryškinimas**, kodo blokai ir
               &lt;Callout&gt;.
             </p>

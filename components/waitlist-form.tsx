@@ -10,7 +10,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Waitlist / newsletter capture. The submit handler is intentionally a
- * placeholder — the UI is final, only the integration point is pending.
+ * placeholder - the UI is final, only the integration point is pending.
  */
 export function WaitlistForm() {
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ export function WaitlistForm() {
       return;
     }
 
-    // TODO: connect backend — POST `trimmed` to a real waitlist/newsletter
+    // TODO: connect backend - POST `trimmed` to a real waitlist/newsletter
     // provider (an API route + Resend / ConvertKit / Mailchimp, etc.).
     setStatus('success');
     setEmail('');

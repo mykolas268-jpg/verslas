@@ -64,7 +64,7 @@ export function PostList({ initialPosts }: { initialPosts: AdminPostSummary[] })
             </div>
             <p className="mt-1 truncate font-serif text-lg">{post.title}</p>
             <p className="truncate text-xs text-muted">
-              /{post.slug} · {post.date ? formatDateLt(post.date) : '—'}
+              /{post.slug} · {post.date ? formatDateLt(post.date) : '-'}
             </p>
           </div>
 

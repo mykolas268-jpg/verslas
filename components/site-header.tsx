@@ -17,7 +17,7 @@ function Wordmark() {
     <Link
       href="/"
       className="group inline-flex items-center gap-2 rounded-md text-lg font-semibold tracking-tight text-ink"
-      aria-label={`${siteConfig.name} — pradžia`}
+      aria-label={`${siteConfig.name} - pradžia`}
     >
       <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-accent-fg transition-transform duration-300 ease-out-expo group-hover:rotate-[18deg]">
         <IconSpark size={18} />
