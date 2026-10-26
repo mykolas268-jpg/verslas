@@ -1,0 +1,67 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI laiko taupymas verslui">
+  <defs>
+    <linearGradient id="bg-laikas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1f02"/>
+      <stop offset="1" stop-color="#061201"/>
+    </linearGradient>
+    <radialGradient id="glow-laikas" cx="0.45" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#84cc16" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#84cc16" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-laikas" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0V40H0" fill="none" stroke="#84cc16" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-laikas)"/>
+  <rect width="1200" height="750" fill="url(#grid-laikas)"/>
+  <rect width="1200" height="750" fill="url(#glow-laikas)"/>
+
+  <!-- clock face -->
+  <g transform="translate(500 180)">
+    <circle cx="100" cy="100" r="100" fill="none" stroke="#84cc16" stroke-opacity="0.3" stroke-width="2"/>
+    <circle cx="100" cy="100" r="85" fill="none" stroke="#65a30d" stroke-opacity="0.15" stroke-width="1"/>
+    <!-- hour marks -->
+    <line x1="100" y1="10" x2="100" y2="25" stroke="#a3e635" stroke-opacity="0.6" stroke-width="2"/>
+    <line x1="100" y1="175" x2="100" y2="190" stroke="#a3e635" stroke-opacity="0.6" stroke-width="2"/>
+    <line x1="10" y1="100" x2="25" y2="100" stroke="#a3e635" stroke-opacity="0.6" stroke-width="2"/>
+    <line x1="175" y1="100" x2="190" y2="100" stroke="#a3e635" stroke-opacity="0.6" stroke-width="2"/>
+    <!-- hour hand -->
+    <line x1="100" y1="100" x2="100" y2="45" stroke="#a3e635" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round"/>
+    <!-- minute hand -->
+    <line x1="100" y1="100" x2="155" y2="70" stroke="#a3e635" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round"/>
+    <!-- center dot -->
+    <circle cx="100" cy="100" r="5" fill="#84cc16" fill-opacity="0.8"/>
+  </g>
+
+  <!-- fast-forward arrows -->
+  <g transform="translate(780 250)" fill="#a3e635" fill-opacity="0.5">
+    <polygon points="0,0 30,20 0,40"/>
+    <polygon points="35,0 65,20 35,40"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(900 150)" fill="#d9f99d" fill-opacity="0.85">
+    <path d="M20 0c2 15 6 19 21 21-15 2-19 6-21 21-2-15-6-19-21-21C14 19 18 15 20 0Z"/>
+  </g>
+
+  <!-- progress bars -->
+  <g transform="translate(250 430)">
+    <rect x="0" y="0" width="300" height="12" rx="6" fill="#65a30d" fill-opacity="0.15"/>
+    <rect x="0" y="0" width="240" height="12" rx="6" fill="#84cc16" fill-opacity="0.4"/>
+    <rect x="0" y="26" width="300" height="12" rx="6" fill="#65a30d" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="180" height="12" rx="6" fill="#84cc16" fill-opacity="0.3"/>
+    <rect x="0" y="52" width="300" height="12" rx="6" fill="#65a30d" fill-opacity="0.15"/>
+    <rect x="0" y="52" width="270" height="12" rx="6" fill="#84cc16" fill-opacity="0.35"/>
+  </g>
+
+  <!-- badge -->
+  <rect x="830" y="340" width="200" height="36" rx="18" fill="#65a30d" fill-opacity="0.2" stroke="#a3e635" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="930" y="364" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#d9f99d" letter-spacing="2">−10 VAL / SAV</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#d9f99d">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#84cc16"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · LAIKAS</text>
+  </g>
+</svg>

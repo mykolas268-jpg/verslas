@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI turinio planas socialiniams tinklams">
+  <defs>
+    <linearGradient id="bg-tp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e1338"/>
+      <stop offset="1" stop-color="#0f0a1f"/>
+    </linearGradient>
+    <radialGradient id="glow-tp" cx="0.45" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots-tp" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#a78bfa" fill-opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-tp)"/>
+  <rect width="1200" height="750" fill="url(#dots-tp)"/>
+  <rect width="1200" height="750" fill="url(#glow-tp)"/>
+
+  <!-- calendar grid -->
+  <g transform="translate(340 160)" stroke="#a78bfa" stroke-opacity="0.2" fill="none">
+    <rect width="520" height="360" rx="18" stroke-width="1.5" stroke-opacity="0.25"/>
+    <!-- rows -->
+    <line x1="0" y1="60" x2="520" y2="60" stroke-width="1"/>
+    <line x1="0" y1="120" x2="520" y2="120" stroke-width="1"/>
+    <line x1="0" y1="180" x2="520" y2="180" stroke-width="1"/>
+    <line x1="0" y1="240" x2="520" y2="240" stroke-width="1"/>
+    <line x1="0" y1="300" x2="520" y2="300" stroke-width="1"/>
+    <!-- cols -->
+    <line x1="74" y1="0" x2="74" y2="360" stroke-width="1"/>
+    <line x1="148" y1="0" x2="148" y2="360" stroke-width="1"/>
+    <line x1="222" y1="0" x2="222" y2="360" stroke-width="1"/>
+    <line x1="296" y1="0" x2="296" y2="360" stroke-width="1"/>
+    <line x1="370" y1="0" x2="370" y2="360" stroke-width="1"/>
+    <line x1="444" y1="0" x2="444" y2="360" stroke-width="1"/>
+  </g>
+
+  <!-- filled cells indicating posts -->
+  <g fill="#7c3aed" fill-opacity="0.35">
+    <rect x="418" y="222" width="52" height="38" rx="6"/>
+    <rect x="566" y="282" width="52" height="38" rx="6"/>
+    <rect x="714" y="222" width="52" height="38" rx="6"/>
+    <rect x="492" y="342" width="52" height="38" rx="6"/>
+    <rect x="640" y="402" width="52" height="38" rx="6"/>
+  </g>
+  <g fill="#8b5cf6" fill-opacity="0.5">
+    <rect x="418" y="342" width="52" height="38" rx="6"/>
+    <rect x="640" y="282" width="52" height="38" rx="6"/>
+    <rect x="788" y="342" width="52" height="38" rx="6"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(880 140)" fill="#c4b5fd" fill-opacity="0.85">
+    <path d="M24 0c2.5 18 7.5 23 25 25.5-17.5 2.5-22.5 7.5-25 25.5-2.5-18-7.5-23-25-25.5C16.5 23 21.5 18 24 0Z"/>
+  </g>
+
+  <!-- small spark -->
+  <g transform="translate(200 280)" fill="#c4b5fd" fill-opacity="0.5">
+    <path d="M10 0c1 7.5 3 9.5 10.5 10.5-7.5 1-9.5 3-10.5 10.5-1-7.5-3-9.5-10.5-10.5C7 9.5 9 7.5 10 0Z"/>
+  </g>
+
+  <!-- badge -->
+  <rect x="160" y="200" width="130" height="36" rx="18" fill="#7c3aed" fill-opacity="0.2" stroke="#a78bfa" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="225" y="224" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#c4b5fd" letter-spacing="1.5">30 DIENŲ</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#c4b5fd">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#8b5cf6"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · TURINYS</text>
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI chatbot klientų aptarnavimui">
+  <defs>
+    <linearGradient id="bg-chat" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#042f2e"/>
+      <stop offset="1" stop-color="#021716"/>
+    </linearGradient>
+    <radialGradient id="glow-chat" cx="0.45" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-chat" width="38" height="38" patternUnits="userSpaceOnUse">
+      <path d="M38 0V38H0" fill="none" stroke="#06b6d4" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-chat)"/>
+  <rect width="1200" height="750" fill="url(#grid-chat)"/>
+  <rect width="1200" height="750" fill="url(#glow-chat)"/>
+
+  <!-- chat window frame -->
+  <g transform="translate(360 140)">
+    <rect width="480" height="340" rx="24" fill="#ffffff" fill-opacity="0.06" stroke="#22d3ee" stroke-opacity="0.2" stroke-width="1.5"/>
+
+    <!-- user message bubble (right) -->
+    <rect x="220" y="40" width="220" height="50" rx="16" fill="#0891b2" fill-opacity="0.35"/>
+    <rect x="240" y="56" width="150" height="10" rx="5" fill="#a5f3fc" fill-opacity="0.4"/>
+
+    <!-- bot message bubble (left) -->
+    <rect x="30" y="110" width="280" height="70" rx="16" fill="#ffffff" fill-opacity="0.08" stroke="#22d3ee" stroke-opacity="0.15" stroke-width="1"/>
+    <rect x="50" y="130" width="200" height="10" rx="5" fill="#67e8f9" fill-opacity="0.35"/>
+    <rect x="50" y="150" width="240" height="10" rx="5" fill="#67e8f9" fill-opacity="0.25"/>
+
+    <!-- user message 2 -->
+    <rect x="260" y="200" width="180" height="50" rx="16" fill="#0891b2" fill-opacity="0.3"/>
+    <rect x="280" y="216" width="120" height="10" rx="5" fill="#a5f3fc" fill-opacity="0.35"/>
+
+    <!-- typing indicator -->
+    <g transform="translate(50 280)">
+      <circle cx="0" cy="0" r="5" fill="#22d3ee" fill-opacity="0.6"/>
+      <circle cx="18" cy="0" r="5" fill="#22d3ee" fill-opacity="0.4"/>
+      <circle cx="36" cy="0" r="5" fill="#22d3ee" fill-opacity="0.25"/>
+    </g>
+  </g>
+
+  <!-- bot icon -->
+  <g transform="translate(250 260)">
+    <circle r="28" fill="#06b6d4" fill-opacity="0.2" stroke="#22d3ee" stroke-opacity="0.4" stroke-width="1.5"/>
+    <circle cx="-8" cy="-6" r="4" fill="#67e8f9" fill-opacity="0.8"/>
+    <circle cx="8" cy="-6" r="4" fill="#67e8f9" fill-opacity="0.8"/>
+    <path d="M-10 6Q0 16 10 6" fill="none" stroke="#67e8f9" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(900 180)" fill="#a5f3fc" fill-opacity="0.8">
+    <path d="M20 0c2 15 6 19 21 21-15 2-19 6-21 21-2-15-6-19-21-21C14 19 18 15 20 0Z"/>
+  </g>
+
+  <!-- badge -->
+  <rect x="820" y="420" width="200" height="36" rx="18" fill="#0891b2" fill-opacity="0.2" stroke="#22d3ee" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="920" y="444" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#a5f3fc" letter-spacing="2">24/7 · ATSAKYMAI</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#a5f3fc">
+    <rect x="150" y="560" width="14" height="14" rx="3" fill="#06b6d4"/>
+    <text x="178" y="572" font-size="26" letter-spacing="6" fill-opacity="0.9">AI · CHATBOT</text>
+  </g>
+</svg>
