@@ -1,8 +1,30 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PageHeader } from '@/components/page-header';
 import { Reveal } from '@/components/reveal';
 import { IconArrowRight, IconCheck } from '@/components/icons';
+
+const team = [
+  {
+    name: 'Vytautas',
+    role: 'CEO',
+    image: '/images/team/vytautas.webp',
+    bio: 'Strateginė verslo kryptis ir augimo planavimas. Daugiau nei 15 metų patirties kuriant ir vystant smulkų bei vidutinį verslą Lietuvoje.',
+  },
+  {
+    name: 'Goda',
+    role: 'Rinkodaros specialistė',
+    image: '/images/team/goda.webp',
+    bio: 'Turinio strategija, SEO ir socialinių tinklų rinkodara. Padeda verslams rasti savo balsą ir pasiekti klientus ten, kur jie jau yra.',
+  },
+  {
+    name: 'Tomas',
+    role: 'Techninių sistemų kūrimas',
+    image: '/images/team/tomas.webp',
+    bio: 'Programavimas, AI integracijų diegimas ir automatizavimas. Paverčia verslo procesus veikiančiomis techninėmis sistemomis.',
+  },
+] as const;
 
 export const metadata: Metadata = {
   title: 'Apie',
@@ -87,6 +109,37 @@ export default function ApiePage() {
           </aside>
         </Reveal>
       </div>
+      {/* ── Komanda ── */}
+      <Reveal>
+        <section className="mt-16 border-t border-line pt-12">
+          <h2 className="font-serif text-2xl sm:text-3xl">Mūsų komanda</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+            Už „verslas.ai" stovi komanda, kuri jungia verslo patirtį,
+            rinkodaros žinias ir technologinį supratimą.
+          </p>
+
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {team.map((member) => (
+              <div key={member.name} className="text-center">
+                <div className="mx-auto h-40 w-40 overflow-hidden rounded-full border-2 border-line">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={160}
+                    height={160}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <h3 className="mt-5 font-serif text-lg">{member.name}</h3>
+                <p className="text-sm font-medium text-accent">{member.role}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {member.bio}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </Reveal>
     </div>
   );
 }
