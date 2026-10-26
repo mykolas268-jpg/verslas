@@ -10,7 +10,7 @@ const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 
 /**
  * Minimal frontmatter parser. Splits the leading YAML block from the MDX body
- * and parses it with the maintained js-yaml@4 (safe `load` — never executes
+ * and parses it with the maintained js-yaml@4 (safe `load` - never executes
  * custom YAML types). Replaces the unmaintained `gray-matter` dependency,
  * which bundled a vulnerable js-yaml@3.
  */

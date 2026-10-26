@@ -13,7 +13,7 @@ export default function NotFound() {
         Šis puslapis pasiklydo
       </h1>
       <p className="mt-4 max-w-md text-muted">
-        Puslapio, kurio ieškai, nėra arba jis buvo perkeltas. Bet nepasiklysk —
+        Puslapio, kurio ieškai, nėra arba jis buvo perkeltas. Bet nepasiklysk -
         grįžk į pradžią arba paskaityk ką nors naujo.
       </p>
 

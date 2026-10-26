@@ -80,7 +80,7 @@ function UseCaseCard({ item }: { item: UseCase }) {
         {item.poster ? (
           <Image
             src={item.poster}
-            alt={`${item.title} — pavyzdinis reklaminio video formatas`}
+            alt={`${item.title} - pavyzdinis reklaminio video formatas`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
             className="object-cover transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]"
@@ -145,11 +145,11 @@ export default function ReklaminisVideoPage() {
             Reklaminis video verslui
           </p>
           <h1 className="mt-6 max-w-3xl font-serif text-4xl leading-[1.05] sm:text-6xl">
-            Reklaminis video tavo verslui — {priceLabel}, per {offer.deliveryLabel}
+            Reklaminis video tavo verslui - {priceLabel}, per {offer.deliveryLabel}
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
             Trumpas, reklamai paruoštas klipas be filmavimo grupės ir be
-            tūkstantinių sąskaitų. Parodyk produktą ten, kur klientai jau žiūri —
+            tūkstantinių sąskaitų. Parodyk produktą ten, kur klientai jau žiūri -
             „Instagram“, „TikTok“ ir „Facebook“.
           </p>
 
@@ -233,7 +233,7 @@ export default function ReklaminisVideoPage() {
               </div>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
                 Vienas klipas, fiksuota kaina, jokių paslėptų mokesčių. Reikia
-                kelių per mėnesį? Parašyk — suderinsim.
+                kelių per mėnesį? Parašyk - suderinsim.
               </p>
               <a href="#uzsakyti" className="btn-accent mt-6">
                 Užsisakyk video
@@ -280,7 +280,7 @@ export default function ReklaminisVideoPage() {
                 Užsisakyk arba paklausk
               </h2>
               <p className="mt-3 text-muted">
-                Parašyk vieną eilutę apie tai, ką reklamuoji — atsiųsim pavyzdį ir
+                Parašyk vieną eilutę apie tai, ką reklamuoji - atsiųsim pavyzdį ir
                 aiškią kainą. Be įsipareigojimų.
               </p>
             </div>

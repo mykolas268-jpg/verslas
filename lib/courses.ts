@@ -1,6 +1,6 @@
 /**
  * Course catalogue. Data-driven so real courses can be dropped in later with
- * no layout changes — flip `status` to 'available' and add an `href`.
+ * no layout changes - flip `status` to 'available' and add an `href`.
  *
  * TODO: replace these placeholder entries with real course data.
  */
@@ -34,7 +34,7 @@ export const courses: Course[] = [
     slug: 'ai-rinkodara-ir-turinys',
     title: 'AI rinkodarai ir turiniui',
     summary:
-      'Produktų aprašymai, socialiniai tinklai, naujienlaiškiai ir SEO tekstai — kaip su AI kurti vientiso tono turinį dideliais kiekiais.',
+      'Produktų aprašymai, socialiniai tinklai, naujienlaiškiai ir SEO tekstai - kaip su AI kurti vientiso tono turinį dideliais kiekiais.',
     level: 'Vidutinis lygis',
     duration: '4 savaitės',
     topics: ['Rinkodara', 'Turinys', 'SEO'],
@@ -44,7 +44,7 @@ export const courses: Course[] = [
     slug: 'ai-procesu-automatizavimas',
     title: 'Procesų automatizavimas su AI',
     summary:
-      'Kaip sujungti AI su įrankiais, kuriuos jau naudoji, ir automatizuoti pasikartojančius darbus — be programavimo patirties.',
+      'Kaip sujungti AI su įrankiais, kuriuos jau naudoji, ir automatizuoti pasikartojančius darbus - be programavimo patirties.',
     level: 'Pažengusiems',
     duration: '5 savaitės',
     topics: ['Automatizavimas', 'Integracijos', 'Procesai'],

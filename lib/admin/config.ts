@@ -11,7 +11,7 @@ export interface GithubConfig {
 
 /**
  * Returns GitHub config when both a token and repo are set, otherwise null
- * (in which case the admin falls back to local-filesystem storage — useful for
+ * (in which case the admin falls back to local-filesystem storage - useful for
  * local authoring with `npm run dev`).
  */
 export function githubConfig(): GithubConfig | null {

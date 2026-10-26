@@ -15,7 +15,7 @@ export const siteConfig = {
   name: 'verslas.ai',
   url: rawUrl.replace(/\/$/, ''),
   /** One-line brand promise used on the home hero. */
-  tagline: 'Dirbtinis intelektas tavo verslui — be teorijos, su pavyzdžiais.',
+  tagline: 'Dirbtinis intelektas tavo verslui - be teorijos, su pavyzdžiais.',
   /** Default meta description (Lithuanian). */
   description:
     'Konkretūs, pavyzdžiais paremti straipsniai apie tai, kaip naudoti dirbtinį intelektą versle. Realūs scenarijai, žingsnis po žingsnio ir paruošti promptai.',
@@ -37,9 +37,9 @@ export const siteConfig = {
   /** Default values for the reusable <CTA /> funnel component. */
   cta: {
     eyebrow: 'Reklaminis video',
-    title: 'Reklaminis video tavo verslui — 99 €',
+    title: 'Reklaminis video tavo verslui - 99 €',
     description:
-      'Trumpas, reklamai paruoštas klipas per 4 darbo dienas. Parodyk produktą ten, kur klientai jau žiūri — „Instagram", „TikTok" ir „Facebook".',
+      'Trumpas, reklamai paruoštas klipas per 4 darbo dienas. Parodyk produktą ten, kur klientai jau žiūri - „Instagram", „TikTok" ir „Facebook".',
     label: 'Užsisakyk video',
     href: '/reklaminis-video',
   },

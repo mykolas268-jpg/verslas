@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     });
     return res;
   } catch {
-    // e.g. SESSION_SECRET too short — return a clean message, not a raw 500.
+    // e.g. SESSION_SECRET too short - return a clean message, not a raw 500.
     return NextResponse.json(
       { error: 'Serverio konfigūracijos klaida (patikrink SESSION_SECRET).' },
       { status: 500 },

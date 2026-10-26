@@ -46,7 +46,7 @@ export function verifySessionToken(token: string | undefined | null): boolean {
     const payload = JSON.parse(Buffer.from(body, 'base64url').toString());
     return typeof payload.exp === 'number' && payload.exp > Date.now();
   } catch {
-    // Missing SESSION_SECRET or a malformed token — treat as unauthenticated.
+    // Missing SESSION_SECRET or a malformed token - treat as unauthenticated.
     return false;
   }
 }

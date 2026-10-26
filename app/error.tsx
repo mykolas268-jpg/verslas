@@ -25,7 +25,7 @@ export default function Error({
 
       <h1 className="mt-8 font-serif text-3xl sm:text-4xl">Kažkas nutiko</h1>
       <p className="mt-4 max-w-md text-muted">
-        Įvyko nenumatyta klaida. Pabandyk dar kartą — jei kartojasi, grįžk į
+        Įvyko nenumatyta klaida. Pabandyk dar kartą - jei kartojasi, grįžk į
         pradžią ir užsuk vėliau.
       </p>
 

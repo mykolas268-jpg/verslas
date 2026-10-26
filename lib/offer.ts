@@ -26,7 +26,7 @@ export interface OfferStep {
   description: string;
 }
 
-/** "Kaip tai veikia" — the four-step flow. */
+/** "Kaip tai veikia" - the four-step flow. */
 export const offerSteps: OfferStep[] = [
   {
     title: 'Parašai, ką reklamuoji',
@@ -39,16 +39,16 @@ export const offerSteps: OfferStep[] = [
   },
   {
     title: 'Peržiūri ir pataisom',
-    description: `Atsiunčiam pavyzdį. Vienas taisymų ratas įskaičiuotas — pakeičiam tekstą, muziką ar tempą, kol tinka.`,
+    description: `Atsiunčiam pavyzdį. Vienas taisymų ratas įskaičiuotas - pakeičiam tekstą, muziką ar tempą, kol tinka.`,
   },
   {
     title: 'Kelia į reklamą',
     description:
-      'Gauni paruoštą failą tinkamu formatu „Instagram", „TikTok" ar „Facebook" reklamai. Visos teisės — tavo.',
+      'Gauni paruoštą failą tinkamu formatu „Instagram", „TikTok" ar „Facebook" reklamai. Visos teisės - tavo.',
   },
 ];
 
-/** What 99 € includes / excludes — kept explicit so there are no surprises. */
+/** What 99 € includes / excludes - kept explicit so there are no surprises. */
 export const offerIncludes: string[] = [
   `Vienas ${offer.lengthLabel} reklaminis klipas`,
   'Tekstas, muzika ir subtitrai lietuviškai',
@@ -77,7 +77,7 @@ export interface UseCase {
 }
 
 /**
- * "Ką galime padaryti" — capability examples by use-case, NOT a claimed
+ * "Ką galime padaryti" - capability examples by use-case, NOT a claimed
  * client portfolio. Posters are illustrations; add `videoUrl` to a card once a
  * real sample clip is ready and it becomes a playable example.
  */
@@ -86,7 +86,7 @@ export const useCases: UseCase[] = [
     title: 'Nekilnojamojo turto apžvalga',
     category: 'Brokeriams',
     description:
-      'Buto ar namo video turas iš nuotraukų — daugiau peržiūrų nei dešimt statiškų kadrų.',
+      'Buto ar namo video turas iš nuotraukų - daugiau peržiūrų nei dešimt statiškų kadrų.',
     poster: '/images/ai-video-turai-brokeriams.webp',
   },
   {
@@ -100,13 +100,13 @@ export const useCases: UseCase[] = [
     title: 'Nuolatinis turinio srautas',
     category: 'Soc. tinklai',
     description:
-      'Keli klipai per mėnesį — akcija, naujiena, sezono pasiūlymas.',
+      'Keli klipai per mėnesį - akcija, naujiena, sezono pasiūlymas.',
     poster: '/images/ai-video-turu-srautas.webp',
   },
   {
     title: 'Paslaugos pristatymas',
     category: 'Paslaugų verslui',
     description:
-      'Aiški žinutė apie paslaugą ir kvietimas registruotis — klinikoms, salonams, meistrams.',
+      'Aiški žinutė apie paslaugą ir kvietimas registruotis - klinikoms, salonams, meistrams.',
   },
 ];

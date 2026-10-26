@@ -2,7 +2,7 @@
 title: "Produktų aprašymai su AI: tekstai, kurie parduoda, o ne tik užpildo lentelę"
 slug: ai-produktu-aprasymai
 date: 2026-06-14
-excerpt: "Maža e-parduotuvė turėjo 80 produktų be aprašymų. Štai kaip su vienu promptu paruošti vientiso stiliaus, SEO draugiškus tekstus — greitai ir nenuobodžiai."
+excerpt: "Maža e-parduotuvė turėjo 80 produktų be aprašymų. Štai kaip su vienu promptu paruošti vientiso stiliaus, SEO draugiškus tekstus - greitai ir nenuobodžiai."
 tags: ["Rinkodara", "Turinys", "Promptai"]
 cover: /images/ai-produktu-aprasymai.svg
 draft: false
@@ -10,13 +10,13 @@ draft: false
 
 <Callout type="sample">
 
-Pavyzdinis straipsnis — pakeisk savo turiniu. Tai brand'o pavyzdys, rodantis straipsnio struktūrą ir toną.
+Pavyzdinis straipsnis - pakeisk savo turiniu. Tai brand'o pavyzdys, rodantis straipsnio struktūrą ir toną.
 
 </Callout>
 
-Rankų darbo žvakių parduotuvė „Žvakių namai“ turėjo gražias nuotraukas, bet 80 produktų kortelių su tuščiu aprašymo lauku. Savininkas Tomas bandė rašyti pats — po dešimto aprašymo visi tekstai pradėjo skambėti vienodai nuobodžiai: „Kokybiška sojų vaško žvakė. Puiki dovana.“
+Rankų darbo žvakių parduotuvė „Žvakių namai“ turėjo gražias nuotraukas, bet 80 produktų kortelių su tuščiu aprašymo lauku. Savininkas Tomas bandė rašyti pats - po dešimto aprašymo visi tekstai pradėjo skambėti vienodai nuobodžiai: „Kokybiška sojų vaško žvakė. Puiki dovana.“
 
-Problema ne ta, kad reikia rašyti. Problema ta, kad reikia rašyti **80 kartų vienodu stiliumi, bet ne vienodais žodžiais** — ir dar taip, kad „Google“ tave rastų. Čia AI tikrai stipri.
+Problema ne ta, kad reikia rašyti. Problema ta, kad reikia rašyti **80 kartų vienodu stiliumi, bet ne vienodais žodžiais** - ir dar taip, kad „Google“ tave rastų. Čia AI tikrai stipri.
 
 ## Ką darysime
 
@@ -25,12 +25,12 @@ Sukursime **vieną šabloną**, kuris bet kurio produkto duomenis paverčia paru
 <ProseImage
   src="/images/ai-turinio-srautas.svg"
   alt="Trijų žingsnių schema: produkto duomenys, AI promptas, paruoštas aprašymas"
-  caption="Vieną kartą sukurtą šabloną kartoji visiems produktams — keičiasi tik įvedami duomenys."
+  caption="Vieną kartą sukurtą šabloną kartoji visiems produktams - keičiasi tik įvedami duomenys."
 />
 
 ## 1 žingsnis: apibrėžk prekės ženklo balsą
 
-Prieš generuodamas tekstus, vienoje vietoje surašyk, **kaip kalba tavo prekės ženklas**. Be to AI rašys „vidutiniškai“ — taisyklingai, bet be charakterio.
+Prieš generuodamas tekstus, vienoje vietoje surašyk, **kaip kalba tavo prekės ženklas**. Be to AI rašys „vidutiniškai“ - taisyklingai, bet be charakterio.
 
 ```text title="balsas.txt"
 Tonas: jaukus, ramus, šiek tiek poetiškas, bet konkretus.
@@ -73,7 +73,7 @@ Vieną pagrindinį raktažodį (pvz., „sojų vaško žvakė“) paduok kaip at
 
 ## 3 žingsnis: generuok partijomis
 
-Kai šablonas veikia su vienu produktu, tą patį gali pakartoti visam sąrašui. Techniškesniam skaitytojui — minimalus ciklas, kuris pereina visas eilutes iš lentelės:
+Kai šablonas veikia su vienu produktu, tą patį gali pakartoti visam sąrašui. Techniškesniam skaitytojui - minimalus ciklas, kuris pereina visas eilutes iš lentelės:
 
 ```python title="generuoti.py"
 import csv
@@ -86,12 +86,12 @@ for eilute in csv.DictReader(open("produktai.csv", encoding="utf-8")):
 
 <Callout type="warning">
 
-AI nežino tavo produkto geriau už tave. Visada peržiūrėk sugeneruotus tekstus — ypač skaičius (degimo laiką, dydžius, sudėtį). Modelis gali įtikinamai parašyti tai, ko nėra.
+AI nežino tavo produkto geriau už tave. Visada peržiūrėk sugeneruotus tekstus - ypač skaičius (degimo laiką, dydžius, sudėtį). Modelis gali įtikinamai parašyti tai, ko nėra.
 
 </Callout>
 
 ## Rezultatas
 
-Per vieną popietę „Žvakių namai“ turėjo 80 vientiso stiliaus aprašymų — Tomas tik peržiūrėjo ir pataisė keletą. Tekstai nustojo skambėti kaip kopijos, o parduotuvė pradėjo geriau rodytis paieškoje.
+Per vieną popietę „Žvakių namai“ turėjo 80 vientiso stiliaus aprašymų - Tomas tik peržiūrėjo ir pataisė keletą. Tekstai nustojo skambėti kaip kopijos, o parduotuvė pradėjo geriau rodytis paieškoje.
 
-Tas pats principas, kaip ir [klientų aptarnavime](/straipsniai/ai-klientu-aptarnavimas): AI paruošia juodraštį, o žmogus prideda skonį ir patvirtina. Šabloną sukuri kartą — naudojiesi šimtus kartų.
+Tas pats principas, kaip ir [klientų aptarnavime](/straipsniai/ai-klientu-aptarnavimas): AI paruošia juodraštį, o žmogus prideda skonį ir patvirtina. Šabloną sukuri kartą - naudojiesi šimtus kartų.

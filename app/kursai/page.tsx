@@ -11,7 +11,7 @@ import { IconArrowRight, IconClock } from '@/components/icons';
 export const metadata: Metadata = {
   title: 'Kursai',
   description:
-    'Praktiniai „verslas.ai“ kursai apie dirbtinį intelektą versle. Netrukus startuojam — palik el. paštą ir pranešime pirmiems.',
+    'Praktiniai „verslas.ai“ kursai apie dirbtinį intelektą versle. Netrukus startuojam - palik el. paštą ir pranešime pirmiems.',
   alternates: { canonical: '/kursai' },
 };
 
@@ -81,7 +81,7 @@ export default function KursaiPage() {
         <PageHeader
           eyebrow="Kursai"
           title="Kursai netrukus"
-          description="Ruošiame praktinius kursus, kurie padės pritaikyti dirbtinį intelektą tavo versle — nuo pirmo prompto iki realaus rezultato. Užsirašyk, ir pranešime pirmiems."
+          description="Ruošiame praktinius kursus, kurie padės pritaikyti dirbtinį intelektą tavo versle - nuo pirmo prompto iki realaus rezultato. Užsirašyk, ir pranešime pirmiems."
         />
       </Reveal>
 
@@ -92,7 +92,7 @@ export default function KursaiPage() {
           className="mt-10 rounded-3xl border border-line bg-surface p-6 sm:p-10"
         >
           <h2 id="waitlist-heading" className="font-serif text-xl sm:text-2xl">
-            Palik el. paštą — pranešime, kai startuosim
+            Palik el. paštą - pranešime, kai startuosim
           </h2>
           <p className="mt-2 max-w-xl text-sm text-muted">
             Be spamo. Parašysime tik tada, kai kursai bus paruošti, ir

@@ -41,7 +41,7 @@ export async function PUT(
     );
   }
   try {
-    // Slug is immutable on update — keep the URL slug.
+    // Slug is immutable on update - keep the URL slug.
     const result = await savePost({ ...parsed.data, slug }, 'update');
     return NextResponse.json(result);
   } catch (error) {
