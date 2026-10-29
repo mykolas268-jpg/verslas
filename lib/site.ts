@@ -26,7 +26,7 @@ export const siteConfig = {
    * NEXT_PUBLIC_CONTACT_EMAIL; the branded fallback can be set up as a
    * forwarding address on the domain.
    */
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'labas@verslas.ai',
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'info@aiverslui.lt',
   nav: [
     { href: '/', label: 'Pradžia' },
     { href: '/konsultacija', label: 'Konsultacija' },
