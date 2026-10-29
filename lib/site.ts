@@ -29,19 +29,19 @@ export const siteConfig = {
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'labas@verslas.ai',
   nav: [
     { href: '/', label: 'Pradžia' },
-    { href: '/reklaminis-video', label: 'Video' },
+    { href: '/konsultacija', label: 'Konsultacija' },
     { href: '/straipsniai', label: 'Straipsniai' },
     { href: '/kursai', label: 'Kursai' },
     { href: '/apie', label: 'Apie' },
   ] satisfies NavItem[],
   /** Default values for the reusable <CTA /> funnel component. */
   cta: {
-    eyebrow: 'Reklaminis video',
-    title: 'Reklaminis video tavo verslui - 99 €',
+    eyebrow: 'Nemokama konsultacija',
+    title: 'Nemokama AI konsultacija tavo verslui',
     description:
-      'Trumpas, reklamai paruoštas klipas per 4 darbo dienas. Parodyk produktą ten, kur klientai jau žiūri - „Instagram", „TikTok" ir „Facebook".',
-    label: 'Užsisakyk video',
-    href: '/reklaminis-video',
+      '30 min. pokalbis apie tai, kaip AI gali padėti konkrečiai tavo verslui. Be teorijos, be įsipareigojimų - tik praktiniai patarimai.',
+    label: 'Užsiregistruok konsultacijai',
+    href: '/konsultacija',
   },
   author: {
     name: 'verslas.ai komanda',

@@ -22,13 +22,13 @@ function buildMailto(fields: {
   phone: string;
   message: string;
 }): string {
-  const subject = `Video užsakymas - ${fields.name}`;
+  const subject = `AI konsultacija - ${fields.name}`;
   const bodyLines = [
     `Vardas: ${fields.name}`,
     `El. paštas: ${fields.email}`,
     fields.phone ? `Telefonas: ${fields.phone}` : null,
     '',
-    'Ką noriu reklamuoti:',
+    'Apie mano verslą ir kaip norėčiau pritaikyti AI:',
     fields.message,
   ].filter((line): line is string => line !== null);
 
@@ -41,7 +41,7 @@ function buildMailto(fields: {
 }
 
 /**
- * Order/contact form for the reklaminis-video offer. Submits by opening a
+ * Contact form for the AI consultation offer. Submits by opening a
  * prefilled email to siteConfig.contactEmail - works with no backend. The
  * address is also shown as a plain fallback for webmail users.
  *
@@ -61,7 +61,7 @@ export function OrderForm() {
     if (name.trim().length === 0) next.name = 'Įrašyk savo vardą.';
     if (!EMAIL_RE.test(email.trim())) next.email = 'Įvesk teisingą el. pašto adresą.';
     if (message.trim().length < MESSAGE_MIN)
-      next.message = 'Parašyk bent vieną sakinį apie tai, ką reklamuoji.';
+      next.message = 'Parašyk bent vieną sakinį apie savo verslą.';
     return next;
   }
 
@@ -187,7 +187,7 @@ export function OrderForm() {
 
       <div>
         <label htmlFor="order-message" className="mb-1.5 block text-sm font-medium text-ink">
-          Ką nori reklamuoti?
+          Papasakok apie savo verslą
         </label>
         <textarea
           id="order-message"
@@ -201,7 +201,7 @@ export function OrderForm() {
           }}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? 'order-message-error' : undefined}
-          placeholder={`Pvz.: nauja pavasario akcija kavinei, vertikalus klipas „Instagram” reklamai.`}
+          placeholder={`Pvz.: turiu nedidelę kavinę ir noriu sužinoti, kaip AI galėtų padėti su klientų aptarnavimu ir rinkodaros turiniu.`}
           className="w-full rounded-2xl border border-line bg-card px-5 py-3 text-sm text-ink transition-colors"
         />
         {errors.message ? (

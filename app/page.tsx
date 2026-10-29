@@ -37,8 +37,8 @@ export default function HomePage() {
             kuriuos gali pritaikyti savo versle jau šiandien.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/reklaminis-video" className="btn-accent">
-              Užsisakyk reklaminį video
+            <Link href="/konsultacija" className="btn-accent">
+              Nemokama AI konsultacija
               <IconArrowRight size={18} />
             </Link>
             <Link href="/straipsniai" className="btn-outline">
