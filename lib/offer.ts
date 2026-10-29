@@ -82,23 +82,27 @@ export const useCases: UseCase[] = [
     category: 'Paslaugų verslui',
     description:
       'Chatbot\'ai, automatiniai atsakymai, klientų užklausų rūšiavimas - parenkam tinkamiausią sprendimą tavo verslui.',
+    poster: '/images/konsultacija-klientu-aptarnavimas.jpg',
   },
   {
     title: 'Turinio kūrimas su AI',
     category: 'Rinkodara',
     description:
       'Socialinių tinklų įrašai, straipsniai, reklaminiai tekstai - parodom, kaip kurti greičiau ir kokybiškiau.',
+    poster: '/images/konsultacija-turinio-kurimas.jpg',
   },
   {
     title: 'Procesų automatizavimas',
     category: 'Operacijos',
     description:
       'Sąskaitų apdorojimas, ataskaitų generavimas, duomenų analizė - surandame, kur AI sutaupo daugiausia laiko.',
+    poster: '/images/konsultacija-procesu-automatizavimas.jpg',
   },
   {
     title: 'AI strategija verslui',
     category: 'Strategija',
     description:
       'Nežinai, nuo ko pradėti? Padedame sudėlioti prioritetus ir pasirinkti pirmus žingsnius.',
+    poster: '/images/konsultacija-ai-strategija.jpg',
   },
 ];

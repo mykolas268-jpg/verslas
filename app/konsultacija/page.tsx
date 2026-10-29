@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { siteConfig } from '@/lib/site';
 import {
   offer,
@@ -72,9 +73,19 @@ function UseCaseCard({ item }: { item: UseCase }) {
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card">
       <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-        <div className="grid h-full place-items-center bg-gradient-to-br from-accent/25 to-accent/5 text-accent transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]">
-          <IconSpark size={72} />
-        </div>
+        {item.poster ? (
+          <Image
+            src={item.poster}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        ) : (
+          <div className="grid h-full place-items-center bg-gradient-to-br from-accent/25 to-accent/5 text-accent transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]">
+            <IconSpark size={72} />
+          </div>
+        )}
         <span className="absolute left-3 top-3 rounded-full bg-bg/85 px-2.5 py-0.5 text-xs font-medium text-ink backdrop-blur-sm">
           {item.category}
         </span>
