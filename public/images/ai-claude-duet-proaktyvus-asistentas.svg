@@ -1,0 +1,81 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Claude Duet proaktyvus AI asistentas">
+  <defs>
+    <linearGradient id="bg-duet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1222"/>
+      <stop offset="1" stop-color="#070d19"/>
+    </linearGradient>
+    <radialGradient id="glow-duet" cx="0.5" cy="0.35" r="0.55">
+      <stop offset="0" stop-color="#d97706" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#d97706" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-duet" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#94a3b8" fill-opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-duet)"/>
+  <rect width="1200" height="750" fill="url(#grid-duet)"/>
+  <rect width="1200" height="750" fill="url(#glow-duet)"/>
+
+  <!-- morning brief card -->
+  <g transform="translate(340 120)">
+    <rect x="0" y="0" width="520" height="120" rx="12" fill="#1e293b" fill-opacity="0.5" stroke="#d97706" stroke-opacity="0.3" stroke-width="1.5"/>
+    <!-- sun icon -->
+    <circle cx="50" cy="60" r="18" fill="none" stroke="#d97706" stroke-opacity="0.5" stroke-width="1.5"/>
+    <circle cx="50" cy="60" r="8" fill="#d97706" fill-opacity="0.3"/>
+    <line x1="50" y1="34" x2="50" y2="38" stroke="#d97706" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="50" y1="82" x2="50" y2="86" stroke="#d97706" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="24" y1="60" x2="28" y2="60" stroke="#d97706" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="72" y1="60" x2="76" y2="60" stroke="#d97706" stroke-opacity="0.4" stroke-width="1.5"/>
+    <!-- brief text lines -->
+    <rect x="90" y="28" width="180" height="14" rx="3" fill="#d97706" fill-opacity="0.25"/>
+    <rect x="90" y="52" width="380" height="10" rx="2" fill="#94a3b8" fill-opacity="0.2"/>
+    <rect x="90" y="72" width="320" height="10" rx="2" fill="#94a3b8" fill-opacity="0.15"/>
+    <rect x="90" y="92" width="260" height="10" rx="2" fill="#94a3b8" fill-opacity="0.12"/>
+  </g>
+
+  <!-- background task cards -->
+  <g transform="translate(260 280)">
+    <rect x="0" y="0" width="300" height="90" rx="10" fill="#1e293b" fill-opacity="0.4" stroke="#475569" stroke-opacity="0.25" stroke-width="1"/>
+    <!-- spinner -->
+    <circle cx="36" cy="45" r="12" fill="none" stroke="#d97706" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="20 50"/>
+    <rect x="60" y="28" width="140" height="12" rx="3" fill="#94a3b8" fill-opacity="0.25"/>
+    <rect x="60" y="50" width="200" height="10" rx="2" fill="#94a3b8" fill-opacity="0.15"/>
+    <rect x="60" y="68" width="80" height="8" rx="2" fill="#d97706" fill-opacity="0.2"/>
+  </g>
+
+  <g transform="translate(620 280)">
+    <rect x="0" y="0" width="300" height="90" rx="10" fill="#1e293b" fill-opacity="0.4" stroke="#475569" stroke-opacity="0.25" stroke-width="1"/>
+    <!-- check icon -->
+    <circle cx="36" cy="45" r="12" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <polyline points="28,45 34,51 44,39" fill="none" stroke="#10b981" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="60" y="28" width="160" height="12" rx="3" fill="#94a3b8" fill-opacity="0.25"/>
+    <rect x="60" y="50" width="210" height="10" rx="2" fill="#94a3b8" fill-opacity="0.15"/>
+    <rect x="60" y="68" width="100" height="8" rx="2" fill="#10b981" fill-opacity="0.2"/>
+  </g>
+
+  <!-- approval prompt -->
+  <g transform="translate(380 410)">
+    <rect x="0" y="0" width="440" height="80" rx="10" fill="#1e293b" fill-opacity="0.5" stroke="#d97706" stroke-opacity="0.35" stroke-width="1.5"/>
+    <rect x="20" y="18" width="260" height="12" rx="3" fill="#e2e8f0" fill-opacity="0.2"/>
+    <rect x="20" y="40" width="180" height="10" rx="2" fill="#94a3b8" fill-opacity="0.15"/>
+    <!-- approve / reject buttons -->
+    <rect x="290" y="22" width="60" height="28" rx="6" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-opacity="0.4" stroke-width="1"/>
+    <rect x="360" y="22" width="60" height="28" rx="6" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-opacity="0.3" stroke-width="1"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(200 200)" fill="#d97706" fill-opacity="0.5">
+    <path d="M14 0c1.4 10.5 4.2 13.3 14.7 14.7-10.5 1.4-13.3 4.2-14.7 14.7-1.4-10.5-4.2-13.3-14.7-14.7C9.8 13.3 12.6 10.5 14 0Z"/>
+  </g>
+
+  <!-- badge -->
+  <rect x="480" y="530" width="240" height="36" rx="18" fill="#475569" fill-opacity="0.2" stroke="#d97706" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="600" y="554" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#d97706" fill-opacity="0.8" letter-spacing="2">PROACTIVE AGENT</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#cbd5e1">
+    <rect x="150" y="600" width="14" height="14" rx="3" fill="#d97706" fill-opacity="0.5"/>
+    <text x="178" y="612" font-size="26" letter-spacing="6" fill-opacity="0.9">CLAUDE DUET</text>
+  </g>
+</svg>

@@ -1,0 +1,74 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GPT-6 ir Intelligent UI">
+  <defs>
+    <linearGradient id="bg-gpt6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1222"/>
+      <stop offset="1" stop-color="#070d19"/>
+    </linearGradient>
+    <radialGradient id="glow-gpt6" cx="0.5" cy="0.4" r="0.55">
+      <stop offset="0" stop-color="#10b981" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#10b981" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid-gpt6" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#94a3b8" fill-opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg-gpt6)"/>
+  <rect width="1200" height="750" fill="url(#grid-gpt6)"/>
+  <rect width="1200" height="750" fill="url(#glow-gpt6)"/>
+
+  <!-- chat bubble with interactive UI -->
+  <g transform="translate(320 140)">
+    <rect x="0" y="0" width="560" height="340" rx="16" fill="#1e293b" fill-opacity="0.5" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <!-- text lines at top -->
+    <rect x="24" y="24" width="280" height="12" rx="3" fill="#94a3b8" fill-opacity="0.2"/>
+    <rect x="24" y="46" width="200" height="12" rx="3" fill="#94a3b8" fill-opacity="0.15"/>
+
+    <!-- interactive calculator element -->
+    <rect x="24" y="80" width="510" height="180" rx="10" fill="#0f172a" fill-opacity="0.6" stroke="#10b981" stroke-opacity="0.2" stroke-width="1"/>
+
+    <!-- calculator header -->
+    <rect x="40" y="96" width="120" height="14" rx="3" fill="#10b981" fill-opacity="0.25"/>
+
+    <!-- input fields -->
+    <rect x="40" y="126" width="220" height="32" rx="6" fill="#1e293b" stroke="#475569" stroke-opacity="0.3" stroke-width="1"/>
+    <rect x="52" y="136" width="80" height="12" rx="2" fill="#94a3b8" fill-opacity="0.3"/>
+    <rect x="170" y="136" width="60" height="12" rx="2" fill="#e2e8f0" fill-opacity="0.15"/>
+
+    <rect x="280" y="126" width="220" height="32" rx="6" fill="#1e293b" stroke="#475569" stroke-opacity="0.3" stroke-width="1"/>
+    <rect x="292" y="136" width="70" height="12" rx="2" fill="#94a3b8" fill-opacity="0.3"/>
+    <rect x="410" y="136" width="60" height="12" rx="2" fill="#e2e8f0" fill-opacity="0.15"/>
+
+    <!-- result bar -->
+    <rect x="40" y="178" width="480" height="36" rx="8" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-opacity="0.25" stroke-width="1"/>
+    <rect x="56" y="190" width="100" height="12" rx="3" fill="#10b981" fill-opacity="0.4"/>
+    <rect x="400" y="190" width="80" height="12" rx="3" fill="#10b981" fill-opacity="0.6"/>
+
+    <!-- mini chart -->
+    <polyline points="40,240 100,235 160,242 220,225 280,220 340,210 400,215 460,200 510,205"
+              fill="none" stroke="#10b981" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- action buttons -->
+    <rect x="24" y="286" width="100" height="32" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.3" stroke-width="1"/>
+    <rect x="44" y="298" width="60" height="10" rx="2" fill="#10b981" fill-opacity="0.5"/>
+
+    <rect x="140" y="286" width="100" height="32" rx="8" fill="#475569" fill-opacity="0.2" stroke="#94a3b8" stroke-opacity="0.2" stroke-width="1"/>
+    <rect x="160" y="298" width="60" height="10" rx="2" fill="#94a3b8" fill-opacity="0.3"/>
+  </g>
+
+  <!-- spark -->
+  <g transform="translate(940 180)" fill="#10b981" fill-opacity="0.6">
+    <path d="M16 0c1.6 12 4.8 15.2 16.8 16.8-12 1.6-15.2 4.8-16.8 16.8-1.6-12-4.8-15.2-16.8-16.8C11.2 15.2 14.4 12 16 0Z"/>
+  </g>
+
+  <!-- badge -->
+  <rect x="200" y="520" width="160" height="36" rx="18" fill="#475569" fill-opacity="0.2" stroke="#10b981" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="280" y="544" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#10b981" fill-opacity="0.8" letter-spacing="2">INTELLIGENT UI</text>
+
+  <!-- label -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#cbd5e1">
+    <rect x="150" y="600" width="14" height="14" rx="3" fill="#10b981" fill-opacity="0.5"/>
+    <text x="178" y="612" font-size="26" letter-spacing="6" fill-opacity="0.9">GPT-6 · INTELLIGENT UI</text>
+  </g>
+</svg>
