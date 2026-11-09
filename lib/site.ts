@@ -9,7 +9,7 @@ export interface NavItem {
   label: string;
 }
 
-const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://verslas.ai';
+const rawUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.verslas.ai';
 
 export const siteConfig = {
   name: 'verslas.ai',
