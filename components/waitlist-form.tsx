@@ -4,31 +4,57 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { IconArrowRight, IconCheck } from './icons';
 
-type Status = 'idle' | 'error' | 'success';
+type Status = 'idle' | 'sending' | 'error' | 'success';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Waitlist / newsletter capture. The submit handler is intentionally a
- * placeholder - the UI is final, only the integration point is pending.
+ * Waitlist / newsletter capture. Stores the address via /api/leads
+ * (type: 'waitlist') in Supabase.
  */
 export function WaitlistForm() {
   const [email, setEmail] = useState('');
+  const [company, setCompany] = useState(''); // honeypot
   const [status, setStatus] = useState<Status>('idle');
+  const [errorText, setErrorText] = useState('Įvesk teisingą el. pašto adresą.');
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = email.trim();
 
     if (!EMAIL_RE.test(trimmed)) {
+      setErrorText('Įvesk teisingą el. pašto adresą.');
       setStatus('error');
       return;
     }
 
-    // TODO: connect backend - POST `trimmed` to a real waitlist/newsletter
-    // provider (an API route + Resend / ConvertKit / Mailchimp, etc.).
-    setStatus('success');
-    setEmail('');
+    setStatus('sending');
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'waitlist',
+          email: trimmed,
+          sourcePath: window.location.pathname,
+          company,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        setErrorText(data?.error ?? 'Nepavyko užregistruoti. Pabandyk dar kartą.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setErrorText('Nepavyko užregistruoti - patikrink ryšį ir pabandyk dar kartą.');
+      setStatus('error');
+    }
   }
 
   if (status === 'success') {
@@ -44,6 +70,8 @@ export function WaitlistForm() {
       </div>
     );
   }
+
+  const sending = status === 'sending';
 
   return (
     <form onSubmit={handleSubmit} noValidate className="w-full">
@@ -70,14 +98,29 @@ export function WaitlistForm() {
             className="field"
           />
         </div>
-        <button type="submit" className="btn-accent shrink-0">
-          Užsiprenumeruoti
-          <IconArrowRight size={18} />
+        <button type="submit" className="btn-accent shrink-0" disabled={sending}>
+          {sending ? 'Siunčiama...' : 'Užsiprenumeruoti'}
+          {sending ? null : <IconArrowRight size={18} />}
         </button>
       </div>
+
+      {/* Honeypot - hidden from humans, harvested by bots. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="waitlist-company">Įmonė</label>
+        <input
+          id="waitlist-company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(event) => setCompany(event.target.value)}
+        />
+      </div>
+
       {status === 'error' ? (
         <p id="waitlist-error" role="alert" className="mt-2 px-1 text-sm text-accent">
-          Įvesk teisingą el. pašto adresą.
+          {errorText}
         </p>
       ) : null}
     </form>

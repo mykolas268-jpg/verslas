@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { siteConfig } from '@/lib/site';
 import { IconArrowRight, IconCheck } from './icons';
 
-type Status = 'idle' | 'error' | 'success';
+type Status = 'idle' | 'sending' | 'error' | 'success';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MESSAGE_MIN = 5;
@@ -16,45 +15,19 @@ interface FieldErrors {
   message?: string;
 }
 
-function buildMailto(fields: {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}): string {
-  const subject = `AI konsultacija - ${fields.name}`;
-  const bodyLines = [
-    `Vardas: ${fields.name}`,
-    `El. paštas: ${fields.email}`,
-    fields.phone ? `Telefonas: ${fields.phone}` : null,
-    '',
-    'Apie mano verslą ir kaip norėčiau pritaikyti AI:',
-    fields.message,
-  ].filter((line): line is string => line !== null);
-
-  const params = new URLSearchParams({
-    subject,
-    body: bodyLines.join('\n'),
-  });
-  // URLSearchParams encodes spaces as "+"; mail clients expect %20 in the body.
-  return `mailto:${siteConfig.contactEmail}?${params.toString().replace(/\+/g, '%20')}`;
-}
-
 /**
- * Contact form for the AI consultation offer. Submits by opening a
- * prefilled email to siteConfig.contactEmail - works with no backend. The
- * address is also shown as a plain fallback for webmail users.
- *
- * TODO: for guaranteed delivery, POST to an API route wired to Resend/Formspree
- * instead of relying on the visitor's mail client.
+ * Contact form for the AI consultation offer. Submits to /api/leads, which
+ * stores the enquiry in Supabase. No mail client involved.
  */
 export function OrderForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [company, setCompany] = useState(''); // honeypot
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const [formError, setFormError] = useState('');
 
   function validate(): FieldErrors {
     const next: FieldErrors = {};
@@ -65,7 +38,7 @@ export function OrderForm() {
     return next;
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const found = validate();
     setErrors(found);
@@ -74,14 +47,40 @@ export function OrderForm() {
       return;
     }
 
-    const href = buildMailto({
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      message: message.trim(),
-    });
-    window.location.href = href;
-    setStatus('success');
+    setStatus('sending');
+    setFormError('');
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'consultation',
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          message: message.trim(),
+          sourcePath: window.location.pathname,
+          company,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        setFormError(data?.error ?? 'Nepavyko išsiųsti. Pabandyk dar kartą.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+      setName('');
+      setEmail('');
+      setPhone('');
+      setMessage('');
+    } catch {
+      setFormError('Nepavyko išsiųsti - patikrink interneto ryšį ir pabandyk dar kartą.');
+      setStatus('error');
+    }
   }
 
   if (status === 'success') {
@@ -93,21 +92,16 @@ export function OrderForm() {
         <span className="grid h-9 w-9 place-items-center rounded-full bg-accent text-accent-fg">
           <IconCheck size={18} />
         </span>
-        <p className="mt-4 font-medium">Atsidarys tavo el. pašto programa.</p>
+        <p className="mt-4 font-medium">Užklausa gauta. Ačiū!</p>
         <p className="mt-2 text-muted">
-          Užpildyta žinutė jau paruošta - tereikia paspausti „Siųsti“. Jei
-          programa neatsidarė, parašyk tiesiogiai:{' '}
-          <a
-            href={`mailto:${siteConfig.contactEmail}`}
-            className="font-medium text-accent underline underline-offset-2"
-          >
-            {siteConfig.contactEmail}
-          </a>
-          .
+          Susisieksiu su tavimi el. paštu per 1-2 darbo dienas ir suderinsim
+          laiką 30 min. pokalbiui.
         </p>
       </div>
     );
   }
+
+  const sending = status === 'sending';
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
@@ -211,21 +205,35 @@ export function OrderForm() {
         ) : null}
       </div>
 
+      {/* Honeypot - hidden from humans, harvested by bots. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="order-company">Įmonė</label>
+        <input
+          id="order-company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(event) => setCompany(event.target.value)}
+        />
+      </div>
+
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className="btn-accent">
-          Siųsti užklausą
-          <IconArrowRight size={18} />
+        <button type="submit" className="btn-accent" disabled={sending}>
+          {sending ? 'Siunčiama...' : 'Siųsti užklausą'}
+          {sending ? null : <IconArrowRight size={18} />}
         </button>
         <p className="text-sm text-muted">
-          Arba parašyk tiesiogiai:{' '}
-          <a
-            href={`mailto:${siteConfig.contactEmail}`}
-            className="font-medium text-accent underline underline-offset-2"
-          >
-            {siteConfig.contactEmail}
-          </a>
+          Atsakysiu el. paštu per 1-2 darbo dienas.
         </p>
       </div>
+
+      {formError ? (
+        <p role="alert" className="px-1 text-sm text-accent">
+          {formError}
+        </p>
+      ) : null}
     </form>
   );
 }
